@@ -744,45 +744,45 @@ function HOMEINIT($) {
   });
 
   // home electronics
-  var mainSlider = new Swiper(".tp-slider-active", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    loop: true,
-    rtl: rtl_setting,
-    effect: "fade",
-    // Navigation arrows
-    navigation: {
-      nextEl: ".tp-slider-button-next",
-      prevEl: ".tp-slider-button-prev",
-    },
-    pagination: {
-      el: ".tp-slider-dot",
-      clickable: true,
-      renderBullet: function (index, className) {
-        return (
-          '<span class="' +
-          className +
-          '">' +
-          "<button>" +
-          (index + 1) +
-          "</button>" +
-          "</span>"
-        );
-      },
-    },
-  });
+  // var mainSlider = new Swiper(".tp-slider-active", {
+  //   slidesPerView: 1,
+  //   spaceBetween: 30,
+  //   loop: true,
+  //   rtl: rtl_setting,
+  //   effect: "fade",
+  //   // Navigation arrows
+  //   navigation: {
+  //     nextEl: ".tp-slider-button-next",
+  //     prevEl: ".tp-slider-button-prev",
+  //   },
+  //   pagination: {
+  //     el: ".tp-slider-dot",
+  //     clickable: true,
+  //     renderBullet: function (index, className) {
+  //       return (
+  //         '<span class="' +
+  //         className +
+  //         '">' +
+  //         "<button>" +
+  //         (index + 1) +
+  //         "</button>" +
+  //         "</span>"
+  //       );
+  //     },
+  //   },
+  // });
 
-  mainSlider.on("slideChangeTransitionStart", function (realIndex) {
-    if (
-      $(
-        ".swiper-slide.swiper-slide-active, .tp-slider-item .is-light"
-      ).hasClass("is-light")
-    ) {
-      $(".tp-slider-variation").addClass("is-light");
-    } else {
-      $(".tp-slider-variation").removeClass("is-light");
-    }
-  });
+  // mainSlider.on("slideChangeTransitionStart", function (realIndex) {
+  //   if (
+  //     $(
+  //       ".swiper-slide.swiper-slide-active, .tp-slider-item .is-light"
+  //     ).hasClass("is-light")
+  //   ) {
+  //     $(".tp-slider-variation").addClass("is-light");
+  //   } else {
+  //     $(".tp-slider-variation").removeClass("is-light");
+  //   }
+  // });
 
   // home electronics
   var slider = new Swiper(".shop-mega-menu-slider-active", {
@@ -1051,49 +1051,49 @@ function HOMEINIT($) {
     },
   });
 
-  var slider = new Swiper(".tp-product-arrival-active", {
-    slidesPerView: 4,
-    spaceBetween: 30,
-    loop: true,
-    rtl: rtl_setting,
-    pagination: {
-      el: ".tp-arrival-slider-dot",
-      clickable: true,
-      renderBullet: function (index, className) {
-        return (
-          '<span class="' +
-          className +
-          '">' +
-          "<button>" +
-          (index + 1) +
-          "</button>" +
-          "</span>"
-        );
-      },
-    },
-    // Navigation arrows
-    navigation: {
-      nextEl: ".tp-arrival-slider-button-next",
-      prevEl: ".tp-arrival-slider-button-prev",
-    },
-    breakpoints: {
-      1200: {
-        slidesPerView: 4,
-      },
-      992: {
-        slidesPerView: 3,
-      },
-      768: {
-        slidesPerView: 2,
-      },
-      576: {
-        slidesPerView: 2,
-      },
-      0: {
-        slidesPerView: 1,
-      },
-    },
-  });
+  // var slider = new Swiper(".tp-product-arrival-active", {
+  //   slidesPerView: 4,
+  //   spaceBetween: 30,
+  //   loop: true,
+  //   rtl: rtl_setting,
+  //   pagination: {
+  //     el: ".tp-arrival-slider-dot",
+  //     clickable: true,
+  //     renderBullet: function (index, className) {
+  //       return (
+  //         '<span class="' +
+  //         className +
+  //         '">' +
+  //         "<button>" +
+  //         (index + 1) +
+  //         "</button>" +
+  //         "</span>"
+  //       );
+  //     },
+  //   },
+  //   // Navigation arrows
+  //   navigation: {
+  //     nextEl: ".tp-arrival-slider-button-next",
+  //     prevEl: ".tp-arrival-slider-button-prev",
+  //   },
+  //   breakpoints: {
+  //     1200: {
+  //       slidesPerView: 4,
+  //     },
+  //     992: {
+  //       slidesPerView: 3,
+  //     },
+  //     768: {
+  //       slidesPerView: 2,
+  //     },
+  //     576: {
+  //       slidesPerView: 2,
+  //     },
+  //     0: {
+  //       slidesPerView: 1,
+  //     },
+  //   },
+  // });
 
   var slider = new Swiper(".tp-product-banner-slider-active", {
     slidesPerView: 1,
@@ -2247,7 +2247,7 @@ function HOMEINIT($) {
 }
 
 //(jQuery)
-function password_show_toggle() {
+function password_show_toggle($) {
   if ($("#password-show-toggle").length > 0) {
     var btn = document.getElementById("password-show-toggle");
 
@@ -2267,4 +2267,108 @@ function password_show_toggle() {
       }
     });
   }
+}
+
+function initializeSwiper($) {
+
+  let tp_rtl = localStorage.getItem("tp_dir");
+  let rtl_setting = tp_rtl == "rtl";
+
+  let mainSlider = new Swiper(".tp-slider-active", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    rtl: rtl_setting,
+    effect: "fade",
+    // Navigation arrows
+    navigation: {
+      nextEl: ".tp-slider-button-next",
+      prevEl: ".tp-slider-button-prev",
+    },
+    pagination: {
+      el: ".tp-slider-dot",
+      clickable: true,
+      renderBullet: function (index, className) {
+        return (
+          '<span class="' +
+          className +
+          '">' +
+          "<button>" +
+          (index + 1) +
+          "</button>" +
+          "</span>"
+        );
+      },
+    },
+  });
+  
+  mainSlider.on("slideChangeTransitionStart", function (realIndex) {
+    if (
+      $(
+        ".swiper-slide.swiper-slide-active, .tp-slider-item .is-light"
+      ).hasClass("is-light")
+    ) {
+      $(".tp-slider-variation").addClass("is-light");
+    } else {
+      $(".tp-slider-variation").removeClass("is-light");
+    }
+  });
+}
+
+function data_values($) {
+  $("[data-background").each(function () {
+    $(this).css(
+      "background-image",
+      "url( " + $(this).attr("data-background") + "  )"
+    );
+  });
+}
+
+function slider_product($) {
+  let tp_rtl = localStorage.getItem("tp_dir");
+  let rtl_setting = tp_rtl == "rtl";
+  
+  let slider = new Swiper(".tp-product-arrival-active", {
+    slidesPerView: 4,
+    spaceBetween: 30,
+    loop: true,
+    rtl: rtl_setting,
+    pagination: {
+      el: ".tp-arrival-slider-dot",
+      clickable: true,
+      renderBullet: function (index, className) {
+        return (
+          '<span class="' +
+          className +
+          '">' +
+          "<button>" +
+          (index + 1) +
+          "</button>" +
+          "</span>"
+        );
+      },
+    },
+    // Navigation arrows
+    navigation: {
+      nextEl: ".tp-arrival-slider-button-next",
+      prevEl: ".tp-arrival-slider-button-prev",
+    },
+    breakpoints: {
+      1200: {
+        slidesPerView: 4,
+      },
+      992: {
+        slidesPerView: 3,
+      },
+      768: {
+        slidesPerView: 2,
+      },
+      576: {
+        slidesPerView: 2,
+      },
+      0: {
+        slidesPerView: 1,
+      },
+    },
+  });
 }

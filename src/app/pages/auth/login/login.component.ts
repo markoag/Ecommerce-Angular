@@ -35,11 +35,11 @@ export class LoginComponent {
       this.code_user = res.code;
     });
 
-    // afterNextRender(() => {
+    afterNextRender(() => {
       setTimeout(() => {
         password_show_toggle();
       }, 50);
-    // });
+    });
 
     if (this.code_user) {
       let data = {
