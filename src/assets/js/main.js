@@ -813,52 +813,52 @@ function HOMEINIT($) {
   });
 
   // home electronics
-  var slider = new Swiper(".tp-blog-main-slider-active", {
-    slidesPerView: 3,
-    spaceBetween: 20,
-    loop: true,
-    autoplay: {
-      delay: 4000,
-    },
-    rtl: rtl_setting,
-    // Navigation arrows
-    navigation: {
-      nextEl: ".tp-blog-main-slider-button-next",
-      prevEl: ".tp-blog-main-slider-button-prev",
-    },
-    pagination: {
-      el: ".tp-blog-main-slider-dot",
-      clickable: true,
-      renderBullet: function (index, className) {
-        return (
-          '<span class="' +
-          className +
-          '">' +
-          "<button>" +
-          (index + 1) +
-          "</button>" +
-          "</span>"
-        );
-      },
-    },
-    breakpoints: {
-      1200: {
-        slidesPerView: 3,
-      },
-      992: {
-        slidesPerView: 2,
-      },
-      768: {
-        slidesPerView: 2,
-      },
-      576: {
-        slidesPerView: 1,
-      },
-      0: {
-        slidesPerView: 1,
-      },
-    },
-  });
+  // var slider = new Swiper(".tp-blog-main-slider-active", {
+  //   slidesPerView: 3,
+  //   spaceBetween: 20,
+  //   loop: true,
+  //   autoplay: {
+  //     delay: 4000,
+  //   },
+  //   rtl: rtl_setting,
+  //   // Navigation arrows
+  //   navigation: {
+  //     nextEl: ".tp-blog-main-slider-button-next",
+  //     prevEl: ".tp-blog-main-slider-button-prev",
+  //   },
+  //   pagination: {
+  //     el: ".tp-blog-main-slider-dot",
+  //     clickable: true,
+  //     renderBullet: function (index, className) {
+  //       return (
+  //         '<span class="' +
+  //         className +
+  //         '">' +
+  //         "<button>" +
+  //         (index + 1) +
+  //         "</button>" +
+  //         "</span>"
+  //       );
+  //     },
+  //   },
+  //   breakpoints: {
+  //     1200: {
+  //       slidesPerView: 3,
+  //     },
+  //     992: {
+  //       slidesPerView: 2,
+  //     },
+  //     768: {
+  //       slidesPerView: 2,
+  //     },
+  //     576: {
+  //       slidesPerView: 1,
+  //     },
+  //     0: {
+  //       slidesPerView: 1,
+  //     },
+  //   },
+  // });
 
   // home 2 fashion
   var slider = new Swiper(".tp-slider-active-2", {
@@ -1095,27 +1095,27 @@ function HOMEINIT($) {
   //   },
   // });
 
-  var slider = new Swiper(".tp-product-banner-slider-active", {
-    slidesPerView: 1,
-    spaceBetween: 0,
-    loop: true,
-    effect: "fade",
-    pagination: {
-      el: ".tp-product-banner-slider-dot",
-      clickable: true,
-      renderBullet: function (index, className) {
-        return (
-          '<span class="' +
-          className +
-          '">' +
-          "<button>" +
-          (index + 1) +
-          "</button>" +
-          "</span>"
-        );
-      },
-    },
-  });
+  // var slider = new Swiper(".tp-product-banner-slider-active", {
+  //   slidesPerView: 1,
+  //   spaceBetween: 0,
+  //   loop: true,
+  //   effect: "fade",
+  //   pagination: {
+  //     el: ".tp-product-banner-slider-dot",
+  //     clickable: true,
+  //     renderBullet: function (index, className) {
+  //       return (
+  //         '<span class="' +
+  //         className +
+  //         '">' +
+  //         "<button>" +
+  //         (index + 1) +
+  //         "</button>" +
+  //         "</span>"
+  //       );
+  //     },
+  //   },
+  // });
 
   var slider = new Swiper(".tp-product-gadget-banner-slider-active", {
     slidesPerView: 1,
@@ -2371,4 +2371,77 @@ function slider_product($) {
       },
     },
   });
+
+  let slider2 = new Swiper(".tp-product-banner-slider-active", {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    loop: true,
+    effect: "fade",
+    pagination: {
+      el: ".tp-product-banner-slider-dot",
+      clickable: true,
+      renderBullet: function (index, className) {
+        return (
+          '<span class="' +
+          className +
+          '">' +
+          "<button>" +
+          (index + 1) +
+          "</button>" +
+          "</span>"
+        );
+      },
+    },
+  });
+
+  let slider3 = new Swiper(".tp-blog-main-slider-active", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+    },
+    rtl: rtl_setting,
+    // Navigation arrows
+    navigation: {
+      nextEl: ".tp-blog-main-slider-button-next",
+      prevEl: ".tp-blog-main-slider-button-prev",
+    },
+    pagination: {
+      el: ".tp-blog-main-slider-dot",
+      clickable: true,
+      renderBullet: function (index, className) {
+        return (
+          '<span class="' +
+          className +
+          '">' +
+          "<button>" +
+          (index + 1) +
+          "</button>" +
+          "</span>"
+        );
+      },
+    },
+    breakpoints: {
+      1200: {
+        slidesPerView: 3,
+      },
+      992: {
+        slidesPerView: 2,
+      },
+      768: {
+        slidesPerView: 2,
+      },
+      576: {
+        slidesPerView: 1,
+      },
+      0: {
+        slidesPerView: 1,
+      },
+    },
+  });
+
+  setTimeout(() => {
+    $("[data-countdown]").countdown();
+  },50);
 }

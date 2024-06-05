@@ -17,6 +17,7 @@ declare let $: any;
 export class HomeComponent {
   SLIDERS: any = [];
   BANNERS_SECUNDARY: any = [];
+  BANNERS_PRODUCTS: any = [];
   CATEGORIES_RANDOM: any = [];
   TRENDING_PRODUCT_NEW: any = [];
   TRENDING_PRODUCT_FEATURE: any = [];
@@ -24,6 +25,8 @@ export class HomeComponent {
   PRODUCTS_CATEGORY_FIRST: any = [];
   CATEGORY_FIRST: any = [];
   PRODUCTS_CAROUSEL: any = [];
+  DISCOUNT_FLASH: any;
+  DISCOUNT_FLASH_PRODUCTS: any = [];
 
   constructor(public homeService: HomeService) {
     afterNextRender(() => {
@@ -38,6 +41,9 @@ export class HomeComponent {
         this.PRODUCTS_CATEGORY_FIRST = res.product_category_first.data;
         this.CATEGORY_FIRST = res.category_first;
         this.PRODUCTS_CAROUSEL = res.product_carousel.data;
+        this.BANNERS_PRODUCTS = res.slider_products;
+        this.DISCOUNT_FLASH = res.discount_flash;
+        this.DISCOUNT_FLASH_PRODUCTS = res.discount_flash_products;
         setTimeout(() => {
           initializeSwiper($);
           data_values($);
@@ -63,5 +69,15 @@ export class HomeComponent {
     let miDiv: any = document.getElementById(ID_BANNER);
     miDiv.innerHTML = BANNER.title;
     return '';
-  }  
+  }
+
+  getNewPriceDiscount(product: any, DISCOUNT_FLASH_DISCOUNT: any) {
+    if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) { // Discount in percentage
+      let price = product.price_desc - ((product.price_desc * DISCOUNT_FLASH_DISCOUNT.discount) / 100);
+      return price.toFixed(2);
+    } else { // Discount in price
+      let price = product.price_desc - DISCOUNT_FLASH_DISCOUNT.discount;
+      return price.toFixed(2);
+    }
+  }
 }
