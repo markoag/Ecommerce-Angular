@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 declare function initializeSwiper([]): any;
 declare function data_values([]): any;
 declare function slider_product([]): any;
+declare function modal_view_detail([]): any;
 declare let $: any;
 
 @Component({
@@ -27,6 +28,8 @@ export class HomeComponent {
   PRODUCTS_CAROUSEL: any = [];
   DISCOUNT_FLASH: any;
   DISCOUNT_FLASH_PRODUCTS: any = [];
+  product_selected: any = null;
+  variation_selected: any = null;
 
   constructor(public homeService: HomeService) {
     afterNextRender(() => {
@@ -36,7 +39,8 @@ export class HomeComponent {
         this.CATEGORIES_RANDOM = res.categories_random;
         this.TRENDING_PRODUCT_NEW = res.product_trending_new.data;
         this.TRENDING_PRODUCT_FEATURE = res.product_trending_featured.data;
-        this.TRENDING_PRODUCT_TOP_SELLER = res.product_trending_top_sellers.data;
+        this.TRENDING_PRODUCT_TOP_SELLER =
+          res.product_trending_top_sellers.data;
         this.BANNERS_SECUNDARY = res.slider_secundario;
         this.PRODUCTS_CATEGORY_FIRST = res.product_category_first.data;
         this.CATEGORY_FIRST = res.category_first;
@@ -72,12 +76,41 @@ export class HomeComponent {
   }
 
   getNewPriceDiscount(product: any, DISCOUNT_FLASH_DISCOUNT: any) {
-    if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) { // Discount in percentage
-      let price = product.price_desc - ((product.price_desc * DISCOUNT_FLASH_DISCOUNT.discount) / 100);
+    if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) {
+      // Discount in percentage
+      let price =
+        product.price_desc -
+        (product.price_desc * DISCOUNT_FLASH_DISCOUNT.discount) / 100;
       return price.toFixed(2);
-    } else { // Discount in price
+    } else {
+      // Discount in price
       let price = product.price_desc - DISCOUNT_FLASH_DISCOUNT.discount;
       return price.toFixed(2);
+    }
+  }
+  getTotalPriceProduct(product: any) {
+    if (product.discount_g) {
+      return this.getNewPriceDiscount(product, product.discount_g);
+    }
+    return product.price_desc;
+  }
+  openQuickViewModal(product: any) {
+    this.product_selected = null;
+    this.variation_selected = null;
+    setTimeout(() => {
+      this.product_selected = product;
+      modal_view_detail($);
+    }, 50);
+  }
+  selectVariation(variation: any) {
+    if (variation.subvariation) {
+      this.variation_selected = null;      
+      setTimeout(() => {
+        this.variation_selected = variation;      
+        modal_view_detail($);
+      }, 50);      
+    } else {
+      this.variation_selected = null;
     }
   }
 }

@@ -72,9 +72,9 @@ function HOMEINIT($) {
     $(this).css("width", $(this).attr("data-width"));
   });
 
-  $("[data-bg-color]").each(function () {
-    $(this).css("background-color", $(this).attr("data-bg-color"));
-  });
+  // $("[data-bg-color]").each(function () {
+  //   $(this).css("background-color", $(this).attr("data-bg-color"));
+  // });
 
   $("[data-text-color]").each(function () {
     $(this).css("color", $(this).attr("data-text-color"));
@@ -1982,13 +1982,13 @@ function HOMEINIT($) {
       $(this).siblings(".tp-checkout-payment-desc").slideToggle(400);
     });
 
-    $(".tp-color-variation-btn").on("click", function () {
-      $(this).addClass("active").siblings().removeClass("active");
-    });
+    // $(".tp-color-variation-btn").on("click", function () {
+    //   $(this).addClass("active").siblings().removeClass("active");
+    // });
 
-    $(".tp-size-variation-btn").on("click", function () {
-      $(this).addClass("active").siblings().removeClass("active");
-    });
+    // $(".tp-size-variation-btn").on("click", function () {
+    //   $(this).addClass("active").siblings().removeClass("active");
+    // });
 
     ////////////////////////////////////////////////////
     // 17. Show Login Toggle Js
@@ -2444,4 +2444,20 @@ function slider_product($) {
   setTimeout(() => {
     $("[data-countdown]").countdown();
   },50);
+}
+
+function modal_view_detail($) {
+  setTimeout(() => {    
+    $("[data-bg-color]").each(function () {
+      $(this).css("background-color", $(this).attr("data-bg-color"));
+    });
+
+    $(".tp-color-variation-btn").on("click", function () {
+      $(this).addClass("active").siblings().removeClass("active");
+    });
+    
+    $(".tp-size-variation-btn").on("click", function () {
+      $(this).addClass("active").siblings().removeClass("active");
+    });  
+  },50)
 }

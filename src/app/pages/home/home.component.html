@@ -509,9 +509,19 @@
                         </a>
 
                         <!-- product badge -->
-                        <!-- <div class="tp-product-badge">
-                            <span class="product-hot">Hot</span>
-                          </div> -->
+                        @if (product.discount_g) {
+                        <div class="tp-product-badge">
+                          @if (product.discount_g.type_discount == 1) {
+                          <span class="product-hot"
+                            >-{{ product.discount_g.discount }}%</span
+                          >
+                          } @else {
+                          <span class="product-hot"
+                            >-${{ product.discount_g.discount }}</span
+                          >
+                          }
+                        </div>
+                        }
 
                         <!-- product action -->
                         <div class="tp-product-action">
@@ -575,6 +585,7 @@
                             </button>
                             <button
                               type="button"
+                              (click)="openQuickViewModal(product)"
                               class="tp-product-action-btn tp-product-quick-view-btn"
                               data-bs-toggle="modal"
                               data-bs-target="#producQuickViewModal"
@@ -667,11 +678,13 @@
                           </div>
                         </div>
                         <div class="tp-product-price-wrapper">
-                          <!-- <span class="tp-product-price old-price"
-                              >$320.00</span
-                            > -->
-                          <span class="tp-product-price new-price"
-                            >${{ product.price_desc }}</span
+                          @if (product.discount_g) {
+                          <span class="tp-product-price old-price">
+                            ${{ product.price_desc }}</span
+                          >
+                          }
+                          <span class="tp-product-price new-price">
+                            ${{ getTotalPriceProduct(product) }}</span
                           >
                         </div>
                       </div>
@@ -705,10 +718,19 @@
                         </a>
 
                         <!-- product badge -->
-                        <!-- <div class="tp-product-badge">
-                          <span class="product-hot">Hot</span>
-                        </div> -->
-
+                        @if (product.discount_g) {
+                        <div class="tp-product-badge">
+                          @if (product.discount_g.type_discount == 1) {
+                          <span class="product-hot"
+                            >-{{ product.discount_g.discount }}%</span
+                          >
+                          } @else {
+                          <span class="product-hot"
+                            >-${{ product.discount_g.discount }}</span
+                          >
+                          }
+                        </div>
+                        }
                         <!-- product action -->
                         <div class="tp-product-action">
                           <div
@@ -771,6 +793,7 @@
                             </button>
                             <button
                               type="button"
+                              (click)="openQuickViewModal(product)"
                               class="tp-product-action-btn tp-product-quick-view-btn"
                               data-bs-toggle="modal"
                               data-bs-target="#producQuickViewModal"
@@ -863,11 +886,13 @@
                           </div>
                         </div>
                         <div class="tp-product-price-wrapper">
-                          <!-- <span class="tp-product-price old-price"
-                            >$320.00</span
-                          > -->
-                          <span class="tp-product-price new-price"
-                            >${{ product.price_desc }}</span
+                          @if (product.discount_g) {
+                          <span class="tp-product-price old-price">
+                            ${{ product.price_desc }}</span
+                          >
+                          }
+                          <span class="tp-product-price new-price">
+                            ${{ getTotalPriceProduct(product) }}</span
                           >
                         </div>
                       </div>
@@ -902,9 +927,19 @@
                         </a>
 
                         <!-- product badge -->
-                        <!-- <div class="tp-product-badge">
-                          <span class="product-hot">Hot</span>
-                        </div> -->
+                        @if (product.discount_g) {
+                        <div class="tp-product-badge">
+                          @if (product.discount_g.type_discount == 1) {
+                          <span class="product-hot"
+                            >-{{ product.discount_g.discount }}%</span
+                          >
+                          } @else {
+                          <span class="product-hot"
+                            >-${{ product.discount_g.discount }}</span
+                          >
+                          }
+                        </div>
+                        }
 
                         <!-- product action -->
                         <div class="tp-product-action">
@@ -968,6 +1003,7 @@
                             </button>
                             <button
                               type="button"
+                              (click)="openQuickViewModal(product)"
                               class="tp-product-action-btn tp-product-quick-view-btn"
                               data-bs-toggle="modal"
                               data-bs-target="#producQuickViewModal"
@@ -1060,11 +1096,13 @@
                           </div>
                         </div>
                         <div class="tp-product-price-wrapper">
-                          <!-- <span class="tp-product-price old-price"
-                            >$320.00</span
-                          > -->
-                          <span class="tp-product-price new-price"
-                            >${{ product.price_desc }}</span
+                          @if (product.discount_g) {
+                          <span class="tp-product-price old-price">
+                            ${{ product.price_desc }}</span
+                          >
+                          }
+                          <span class="tp-product-price new-price">
+                            ${{ getTotalPriceProduct(product) }}</span
                           >
                         </div>
                       </div>
@@ -1240,7 +1278,7 @@
             class="tp-product-offer-more-wrapper d-flex justify-content-sm-end p-relative z-index-1"
           >
             <div class="tp-product-offer-more mb-40 text-sm-end grey-bg-2">
-              <a href="shop.html" class="tp-btn tp-btn-2 tp-btn-blue"
+              <a href="#" class="tp-btn tp-btn-2 tp-btn-blue"
                 >Ver todas las ofertas
                 <svg
                   width="17"
@@ -1336,6 +1374,7 @@
                         </button>
                         <button
                           type="button"
+                          (click)="openQuickViewModal(product)"
                           class="tp-product-action-btn tp-product-quick-view-btn"
                           data-bs-toggle="modal"
                           data-bs-target="#producQuickViewModal"
@@ -1635,9 +1674,19 @@
                     </a>
 
                     <!-- product badge -->
-                    <!-- <div class="tp-product-badge">
-                            <span class="product-offer">-25%</span>
-                          </div> -->
+                    @if (product.discount_g) {
+                    <div class="tp-product-badge">
+                      @if (product.discount_g.type_discount == 1) {
+                      <span class="product-hot"
+                        >-{{ product.discount_g.discount }}%</span
+                      >
+                      } @else {
+                      <span class="product-hot"
+                        >-${{ product.discount_g.discount }}</span
+                      >
+                      }
+                    </div>
+                    }
 
                     <!-- product action -->
                     <div class="tp-product-action">
@@ -1699,6 +1748,7 @@
                         </button>
                         <button
                           type="button"
+                          (click)="openQuickViewModal(product)"
                           class="tp-product-action-btn tp-product-quick-view-btn"
                           data-bs-toggle="modal"
                           data-bs-target="#producQuickViewModal"
@@ -1788,8 +1838,13 @@
                     </div>
                     <div class="tp-product-price-wrapper">
                       <!-- Condición si esta logeado precio_desc sino pvp -->
-                      <span class="tp-product-price"
-                        >${{ product.price_desc }}</span
+                      @if (product.discount_g) {
+                      <span class="tp-product-price old-price">
+                        ${{ product.price_desc }}</span
+                      >
+                      }
+                      <span class="tp-product-price new-price">
+                        ${{ getTotalPriceProduct(product) }}</span
                       >
                     </div>
                   </div>
@@ -1959,9 +2014,19 @@
                     </a>
 
                     <!-- product badge -->
-                    <!-- <div class="tp-product-badge">
-                      <span class="product-trending">Trending</span>
-                    </div> -->
+                    @if (product.discount_g) {
+                    <div class="tp-product-badge">
+                      @if (product.discount_g.type_discount == 1) {
+                      <span class="product-hot"
+                        >-{{ product.discount_g.discount }}%</span
+                      >
+                      } @else {
+                      <span class="product-hot"
+                        >-${{ product.discount_g.discount }}</span
+                      >
+                      }
+                    </div>
+                    }
 
                     <!-- product action -->
                     <div class="tp-product-action">
@@ -2023,6 +2088,7 @@
                         </button>
                         <button
                           type="button"
+                          (click)="openQuickViewModal(product)"
                           class="tp-product-action-btn tp-product-quick-view-btn"
                           data-bs-toggle="modal"
                           data-bs-target="#producQuickViewModal"
@@ -2111,9 +2177,13 @@
                       </div>
                     </div>
                     <div class="tp-product-price-wrapper">
-                      <!-- <span class="tp-product-price old-price">$475.00</span> -->
-                      <span class="tp-product-price new-price"
-                        >${{ product.price_desc }}</span
+                      @if (product.discount_g) {
+                      <span class="tp-product-price old-price">
+                        ${{ product.price_desc }}</span
+                      >
+                      }
+                      <span class="tp-product-price new-price">
+                        ${{ getTotalPriceProduct(product) }}</span
                       >
                     </div>
                   </div>
@@ -2902,6 +2972,7 @@
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
+        @if (product_selected) {
         <div class="tp-product-modal-content d-lg-flex align-items-start">
           <button
             type="button"
@@ -2928,56 +2999,22 @@
                   aria-controls="nav-1"
                   aria-selected="true"
                 >
-                  <img
-                    src="assets/img/product/details/nav/product-details-nav-1.jpg"
-                    alt=""
-                  />
+                  <img [src]="product_selected.image" alt="" />
                 </button>
+                @for (image of product_selected.images; track image.id) {
                 <button
                   class="nav-link"
-                  id="nav-2-tab"
+                  [id]="'nav-' + image.id + '-tab'"
                   data-bs-toggle="tab"
-                  data-bs-target="#nav-2"
+                  [attr.data-bs-target]="'#nav-' + image.id"
                   type="button"
                   role="tab"
-                  aria-controls="nav-2"
+                  [attr.aria-controls]="'nav-' + image.id"
                   aria-selected="false"
                 >
-                  <img
-                    src="assets/img/product/details/nav/product-details-nav-2.jpg"
-                    alt=""
-                  />
+                  <img [src]="image.image" alt="" />
                 </button>
-                <button
-                  class="nav-link"
-                  id="nav-3-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-3"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-3"
-                  aria-selected="false"
-                >
-                  <img
-                    src="assets/img/product/details/nav/product-details-nav-3.jpg"
-                    alt=""
-                  />
-                </button>
-                <button
-                  class="nav-link"
-                  id="nav-4-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-4"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-4"
-                  aria-selected="false"
-                >
-                  <img
-                    src="assets/img/product/details/nav/product-details-nav-4.jpg"
-                    alt=""
-                  />
-                </button>
+                }
               </div>
             </nav>
             <div class="tab-content m-img" id="productDetailsNavContent">
@@ -2989,61 +3026,31 @@
                 tabindex="0"
               >
                 <div class="tp-product-details-nav-main-thumb">
-                  <img
-                    src="assets/img/product/details/main/product-details-main-1.jpg"
-                    alt=""
-                  />
+                  <img [src]="product_selected.image" alt="" />
                 </div>
               </div>
+              @for (image of product_selected.images; track image.id) {
               <div
                 class="tab-pane fade"
-                id="nav-2"
+                [id]="'nav-' + image.id"
                 role="tabpanel"
-                aria-labelledby="nav-2-tab"
+                [attr.aria-labelledby]="'nav-' + image.id + '-tab'"
                 tabindex="0"
               >
                 <div class="tp-product-details-nav-main-thumb">
-                  <img
-                    src="assets/img/product/details/main/product-details-main-2.jpg"
-                    alt=""
-                  />
+                  <img [src]="image.image" alt="" />
                 </div>
               </div>
-              <div
-                class="tab-pane fade"
-                id="nav-3"
-                role="tabpanel"
-                aria-labelledby="nav-3-tab"
-                tabindex="0"
-              >
-                <div class="tp-product-details-nav-main-thumb">
-                  <img
-                    src="assets/img/product/details/main/product-details-main-3.jpg"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="nav-4"
-                role="tabpanel"
-                aria-labelledby="nav-4-tab"
-                tabindex="0"
-              >
-                <div class="tp-product-details-nav-main-thumb">
-                  <img
-                    src="assets/img/product/details/main/product-details-main-4.jpg"
-                    alt=""
-                  />
-                </div>
-              </div>
+              }
             </div>
           </div>
           <div class="tp-product-details-wrapper">
             <div class="tp-product-details-category">
-              <span>Computers & Tablets</span>
+              <span>{{ product_selected.categorie_first.name }}</span>
             </div>
-            <h3 class="tp-product-details-title">Samsung galaxy A8 tablet</h3>
+            <h3 class="tp-product-details-title">
+              {{ product_selected.title }}
+            </h3>
 
             <!-- inventory details -->
             <div
@@ -3068,41 +3075,97 @@
               </div>
             </div>
             <p>
-              A Screen Everyone Will Love: Whether your family is streaming or
-              video chatting with friends tablet A8... <span>See more</span>
+              {{ product_selected.summary }}
             </p>
 
             <!-- price -->
             <div class="tp-product-details-price-wrapper mb-20">
-              <span class="tp-product-details-price old-price">$320.00</span>
-              <span class="tp-product-details-price new-price">$236.00</span>
+              @if (product_selected.discount_g) {
+              <span class="tp-product-details-price old-price">
+                ${{ product_selected.price_desc }}</span
+              >
+              }
+              <span class="tp-product-details-price new-price">
+                ${{ getTotalPriceProduct(product_selected) }}</span
+              >
             </div>
 
             <!-- variations -->
             <div class="tp-product-details-variation">
               <!-- single item -->
               <div class="tp-product-details-variation-item">
-                <h4 class="tp-product-details-variation-title">Color :</h4>
+                @for (variation_p of product_selected.variations; track
+                variation_p.attribute_id) {
+                <h4 class="tp-product-details-variation-title">
+                  {{ variation_p.attribute.name }}:
+                </h4>
                 <div class="tp-product-details-variation-list">
-                  <button type="button" class="color tp-color-variation-btn">
-                    <span data-bg-color="#F8B655"></span>
-                    <span class="tp-color-variation-tootltip">Yellow</span>
-                  </button>
+                  @for (variation of variation_p.variations; track variation.id)
+                  { @if (variation.propertie && variation.propertie.code) {
                   <button
                     type="button"
-                    class="color tp-color-variation-btn active"
+                    class="color tp-color-variation-btn mx-1"
+                    (click)="selectVariation(variation)"
                   >
-                    <span data-bg-color="#CBCBCB"></span>
-                    <span class="tp-color-variation-tootltip">Gray</span>
+                    <span
+                      [attr.data-bg-color]="variation.propertie.code"
+                    ></span>
+                    <span class="tp-color-variation-tootltip">{{
+                      variation.propertie.name
+                    }}</span>
                   </button>
-                  <button type="button" class="color tp-color-variation-btn">
-                    <span data-bg-color="#494E52"></span>
-                    <span class="tp-color-variation-tootltip">Black</span>
+                  } @if ( variation.propertie && !variation.propertie.code ) {
+                  <button
+                    type="button"
+                    class="tp-size-variation-btn mx-1"
+                    (click)="selectVariation(variation)"
+                  >
+                    <span>{{ variation.propertie.name }}</span>
                   </button>
-                  <button type="button" class="color tp-color-variation-btn">
-                    <span data-bg-color="#B4505A"></span>
-                    <span class="tp-color-variation-tootltip">Brown</span>
+                  } @if ( !variation.propertie ){
+                  <button
+                    type="button"
+                    class="tp-size-variation-btn mx-1"
+                    (click)="selectVariation(variation)"
+                  >
+                    <span>{{ variation.value_add }}</span>
                   </button>
+                  } }
+                </div>
+                }
+              </div>
+              <div
+                class="tp-product-details-variation-item"
+                *ngIf="variation_selected"
+              >
+                <h4 class="tp-product-details-variation-title">
+                  {{ variation_selected.subvariation.attribute.name }}:
+                </h4>
+                <div class="tp-product-details-variation-list">
+                  @for (subvariation of variation_selected.subvariations; track
+                  subvariation.id) { @if (subvariation.propertie &&
+                  subvariation.propertie.code) {
+                  <button
+                    type="button"
+                    class="color tp-color-variation-btn mx-1"
+                  >
+                    <span
+                      [attr.data-bg-color]="subvariation.propertie.code"
+                    ></span>
+                    <span class="tp-color-variation-tootltip">{{
+                      subvariation.propertie.name
+                    }}</span>
+                  </button>
+                  } @if ( subvariation.propertie && !subvariation.propertie.code
+                  ) {
+                  <button type="button" class="tp-size-variation-btn mx-1">
+                    <span>{{ subvariation.propertie.name }}</span>
+                  </button>
+                  } @if ( !subvariation.propertie ){
+                  <button type="button" class="tp-size-variation-btn mx-1">
+                    <span>{{ subvariation.value_add }}</span>
+                  </button>
+                  } }
                 </div>
               </div>
             </div>
@@ -3265,6 +3328,7 @@
             </div>
           </div>
         </div>
+        }
       </div>
     </div>
   </div>
