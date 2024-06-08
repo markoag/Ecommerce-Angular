@@ -1,6 +1,7 @@
 import { Component, afterNextRender } from '@angular/core';
 import { HomeService } from './service/home.service';
 import { CommonModule } from '@angular/common';
+import { ModalProductComponent } from '../guest-view/component/modal-product/modal-product.component';
 
 declare function initializeSwiper([]): any;
 declare function data_values([]): any;
@@ -11,7 +12,7 @@ declare let $: any;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ModalProductComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
