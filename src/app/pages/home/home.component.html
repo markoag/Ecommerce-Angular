@@ -355,7 +355,6 @@
           <div class="tp-section-title-wrapper mb-40">
             <h3 class="tp-section-title">
               Productos de Tendencia
-
               <svg
                 width="114"
                 height="35"
@@ -657,7 +656,7 @@
                           }}</a>
                         </div>
                         <h3 class="tp-product-title">
-                          <a href="#" onclick="return false">
+                          <a [routerLink]="'/producto/'+product.slug">
                             {{ product.title }}
                           </a>
                         </h3>
@@ -865,7 +864,7 @@
                           }}</a>
                         </div>
                         <h3 class="tp-product-title">
-                          <a href="#" onclick="return false">
+                          <a [routerLink]="'/producto/'+product.slug">
                             {{ product.title }}
                           </a>
                         </h3>
@@ -1075,7 +1074,7 @@
                           }}</a>
                         </div>
                         <h3 class="tp-product-title">
-                          <a href="#" onclick="return false">
+                          <a [routerLink]="'/producto/'+product.slug">
                             {{ product.title }}
                           </a>
                         </h3>
@@ -1499,7 +1498,7 @@
                       }}</a>
                     </div>
                     <h3 class="tp-product-title">
-                      <a href="#" onclick="return false;">
+                      <a [routerLink]="[ '/producto', product.slug ]" [queryParams]="{campaign_discount : DISCOUNT_FLASH.code}">
                         {{ product.title }}
                       </a>
                     </h3>
@@ -1818,7 +1817,7 @@
                       }}</a>
                     </div>
                     <h3 class="tp-product-title">
-                      <a href="#" onclick="return false">
+                      <a [routerLink]="'/producto/'+product.slug">
                         {{ product.title }}
                       </a>
                     </h3>
@@ -2158,7 +2157,7 @@
                       }}</a>
                     </div>
                     <h3 class="tp-product-title">
-                      <a href="#" onclick="return false">
+                      <a [routerLink]="'/producto/'+product.slug">
                         {{ product.title }}
                       </a>
                     </h3>

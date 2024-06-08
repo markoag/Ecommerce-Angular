@@ -1,6 +1,6 @@
 import { Component, afterNextRender } from '@angular/core';
 import { HomeService } from '../../home/service/home.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ declare let $: any;
 @Component({
   selector: 'app-landing-product',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalProductComponent],
+  imports: [CommonModule, FormsModule, RouterModule, ModalProductComponent],
   templateUrl: './landing-product.component.html',
   styleUrl: './landing-product.component.css',
 })
@@ -21,6 +21,8 @@ export class LandingProductComponent {
   PRODUCT_SLUG: any;
   PRODUCT_SELECTED: any;
   PRODUCTS_RELATEDS: any = [];
+  DISCOUNT_CODE: any;
+  DISCOUNT_CAMPAIGN: any;
   variation_selected: any = null;
   product_selected_modal: any;
 
@@ -33,8 +35,11 @@ export class LandingProductComponent {
     this.activeRoute.params.subscribe((res: any) => {
       this.PRODUCT_SLUG = res.slug;
     });
+    this.activeRoute.queryParams.subscribe((res: any) => {
+      this.DISCOUNT_CODE = res.campaign_discount;
+    });
     afterNextRender(() => {
-      this.homeService.showProduct(this.PRODUCT_SLUG).subscribe((res: any) => {
+      this.homeService.showProduct(this.PRODUCT_SLUG, this.DISCOUNT_CODE).subscribe((res: any) => {
         console.log(res);
         if (res.message == 403) {
           this.toastr.error('Validación', res.message_text);
@@ -42,6 +47,10 @@ export class LandingProductComponent {
         } else {
           this.PRODUCT_SELECTED = res.product;
           this.PRODUCTS_RELATEDS = res.products_relateds.data;
+          this.DISCOUNT_CAMPAIGN = res.discount_campaign;          
+          if (this.DISCOUNT_CAMPAIGN) {
+            this.PRODUCT_SELECTED.discount_g = this.DISCOUNT_CAMPAIGN;
+          }
           setTimeout(() => {
             modal_view_detail($);
             slider_product($);
