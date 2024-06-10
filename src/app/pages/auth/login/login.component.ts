@@ -77,6 +77,7 @@ export class LoginComponent {
           this.toastr.success('Bienvenido', 'Inicio de sesion correcto');
           setTimeout(() => {
             this.router.navigateByUrl('/');
+            window.location.reload();
           }, 500);
         }
       },

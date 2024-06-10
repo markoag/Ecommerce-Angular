@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ModalProductComponent } from '../guest-view/component/modal-product/modal-product.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth/service/auth.service';
 
 declare function initializeSwiper([]): any;
 declare function data_values([]): any;
@@ -33,8 +34,12 @@ export class HomeComponent {
   DISCOUNT_FLASH_PRODUCTS: any = [];
   product_selected: any = null;
   variation_selected: any = null;
+  price_view: any = null;
 
-  constructor(public homeService: HomeService) {
+  constructor(
+    public homeService: HomeService,
+    private authService: AuthService
+  ) {
     afterNextRender(() => {
       this.homeService.home().subscribe((res: any) => {
         console.log(res);
@@ -60,7 +65,12 @@ export class HomeComponent {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.price_view =
+      this.authService.token && this.authService.user
+        ? 'price_desc'
+        : 'price_pvp';
+  }
 
   getLabelSlider(SLIDERS: any) {
     let miDiv: any = document.getElementById('label-' + SLIDERS.id);
@@ -79,39 +89,56 @@ export class HomeComponent {
   }
 
   getNewPriceDiscount(product: any, DISCOUNT_FLASH_DISCOUNT: any) {
+    let priceType = this.price_view == 'price_desc' ? 'price_desc' : 'price_pvp';
+    let price = product[priceType];
+
     if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) {
-      // Discount in percentage
-      let price =
-        product.price_desc -
-        (product.price_desc * DISCOUNT_FLASH_DISCOUNT.discount) / 100;
-      return price.toFixed(2);
+        // Discount in percentage
+        price -= (price * DISCOUNT_FLASH_DISCOUNT.discount) / 100;
     } else {
-      // Discount in price
-      let price = product.price_desc - DISCOUNT_FLASH_DISCOUNT.discount;
-      return price.toFixed(2);
+        // Discount in price
+        price -= DISCOUNT_FLASH_DISCOUNT.discount;
     }
+
+    // console.log(price);
+    return price.toFixed(2);
   }
   getTotalPriceProduct(product: any) {
     if (product.discount_g) {
       return this.getNewPriceDiscount(product, product.discount_g);
     }
-    return product.price_desc;
+    if (this.price_view == 'price_desc') {
+      return product.price_desc;
+    } else {
+      return product.price_pvp;
+    }
   }
-  openQuickViewModal(product: any) {
+  getTotalPriceView(product: any) {
+    if (this.price_view == 'price_desc') {
+      return product.price_desc;
+    } else {
+      return product.price_pvp;
+    }
+  }
+  openQuickViewModal(product: any, DISCOUNT_FLASH: any = null) {
     this.product_selected = null;
-    this.variation_selected = null;
+    this.variation_selected = null;    
     setTimeout(() => {
       this.product_selected = product;
+      // if (DISCOUNT_FLASH) {
+      //   this.product_selected.discount_g = DISCOUNT_FLASH.discount;
+      //   this.product_selected.type_discount = DISCOUNT_FLASH.type_discount;     
+      // }
       modal_view_detail($);
     }, 50);
   }
   selectVariation(variation: any) {
     if (variation.subvariation) {
-      this.variation_selected = null;      
+      this.variation_selected = null;
       setTimeout(() => {
-        this.variation_selected = variation;      
+        this.variation_selected = variation;
         modal_view_detail($);
-      }, 50);      
+      }, 50);
     } else {
       this.variation_selected = null;
     }

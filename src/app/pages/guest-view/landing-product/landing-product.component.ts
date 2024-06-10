@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalProductComponent } from '../component/modal-product/modal-product.component';
+import { AuthService } from '../../auth/service/auth.service';
 
 declare function modal_view_detail([]): any;
 declare function slider_product([]): any;
@@ -25,12 +26,14 @@ export class LandingProductComponent {
   DISCOUNT_CAMPAIGN: any;
   variation_selected: any = null;
   product_selected_modal: any;
+  price_view: any = null;
 
   constructor(
     public homeService: HomeService,
     public activeRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
   ) {
     this.activeRoute.params.subscribe((res: any) => {
       this.PRODUCT_SLUG = res.slug;
@@ -60,26 +63,44 @@ export class LandingProductComponent {
     });
   }
 
+  ngAfterViewInit() {
+    this.price_view =
+      this.authService.token && this.authService.user
+        ? 'price_desc'
+        : 'price_pvp';
+  }
+
   // Obtener precio del producto por campaña tipo flash
   getNewPriceDiscount(product: any, DISCOUNT_FLASH_DISCOUNT: any) {
+    let priceType = this.price_view == 'price_desc' ? 'price_desc' : 'price_pvp';
+    let price = product[priceType];
+
     if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) {
-      // Discount in percentage
-      let price =
-        product.price_desc -
-        (product.price_desc * DISCOUNT_FLASH_DISCOUNT.discount) / 100;
-      return price.toFixed(2);
+        // Discount in percentage
+        price -= (price * DISCOUNT_FLASH_DISCOUNT.discount) / 100;
     } else {
-      // Discount in price
-      let price = product.price_desc - DISCOUNT_FLASH_DISCOUNT.discount;
-      return price.toFixed(2);
+        // Discount in price
+        price -= DISCOUNT_FLASH_DISCOUNT.discount;
     }
+    // console.log(price);
+    return price.toFixed(2);
   }
-  // Obtener precio del producto por camañana normal o sin campaña
   getTotalPriceProduct(product: any) {
     if (product.discount_g) {
       return this.getNewPriceDiscount(product, product.discount_g);
     }
-    return product.price_desc;
+    if (this.price_view == 'price_desc') {
+      return product.price_desc;
+    } else {
+      return product.price_pvp;
+    }
+  }
+  getTotalPriceView(product: any) {
+    if (this.price_view == 'price_desc') {
+      return product.price_desc;
+    } else {
+      return product.price_pvp;
+    }
   }
   // Seleccionar variación del producto
   selectVariation(variation: any) {

@@ -154,7 +154,7 @@
                   class="tp-product-details-price old-price"
                   *ngIf="PRODUCT_SELECTED.discount_g"
                 >
-                  ${{ PRODUCT_SELECTED.price_desc }}</span
+                  ${{ getTotalPriceView(PRODUCT_SELECTED) }}</span
                 >
 
                 <span class="tp-product-details-price new-price">
@@ -1079,7 +1079,7 @@
                     <div class="tp-product-price-wrapper-3">
                       @if (PRODUCT.discount_g) {
                       <span class="tp-product-price-3 old-price">
-                        ${{ PRODUCT.price_desc }} </span
+                        ${{ getTotalPriceView(PRODUCT) }} </span
                       >
                       }
                       <span class="tp-product-price-3 new-price">

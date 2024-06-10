@@ -105,12 +105,18 @@
     <div class="tp-product-details-price-wrapper mb-20">
       @if (product_selected.discount_g) {
       <span class="tp-product-details-price old-price">
-        ${{ product_selected.price_desc }}</span
+        ${{ getTotalPriceView(product_selected) }}</span
       >
       }
+      <!-- @if (DISCOUNT_FLASH) { -->
       <span class="tp-product-details-price new-price">
         ${{ getTotalPriceProduct(product_selected) }}</span
       >
+    <!-- } @else {
+      <span class="tp-product-details-price new-price">
+        ${{ getTotalPriceProduct(product_selected) }}</span
+      >
+    } -->
     </div>
 
     <!-- variations -->
