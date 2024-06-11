@@ -2,9 +2,11 @@ import { Component, afterNextRender } from '@angular/core';
 import { HomeService } from './service/home.service';
 import { CommonModule } from '@angular/common';
 import { ModalProductComponent } from '../guest-view/component/modal-product/modal-product.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth/service/auth.service';
+import { CartService } from './service/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 declare function initializeSwiper([]): any;
 declare function data_values([]): any;
@@ -38,7 +40,10 @@ export class HomeComponent {
 
   constructor(
     public homeService: HomeService,
-    private authService: AuthService
+    private authService: AuthService,
+    public cartService: CartService,
+    private toastr: ToastrService,
+    private router: Router
   ) {
     afterNextRender(() => {
       this.homeService.home().subscribe((res: any) => {
@@ -72,6 +77,52 @@ export class HomeComponent {
         : 'price_pvp';
   }
 
+  addCart(PRODUCT: any) {
+    if (!this.cartService.authService.user) {
+      this.toastr.error(
+        'Validación',
+        'Debes iniciar sesión para agregar productos al carrito'
+      );
+      this.router.navigateByUrl('/login');
+      return;
+    }
+
+    if (PRODUCT.variations.length > 0) {
+      $('#producQuickViewModal').modal('show');
+      this.openQuickViewModal(PRODUCT);
+      return;
+    }
+
+    let data = {
+      product_id: PRODUCT.id,
+      product_variation_id: null,
+      type_discount: null,
+      discount: 0,
+      type_campaign: null,
+      code_coupon: null,
+      code_discount: null,
+      quantity: 1,
+      price_unit: PRODUCT.price_pvp,
+      subtotal: PRODUCT.price_pvp,
+      total: PRODUCT.price_pvp,
+    };
+
+    this.cartService.registerCart(data).subscribe(
+      (res: any) => {
+        console.log(res);
+        if (res.message == 403) {
+          this.toastr.error('Validación', res.message_text);
+        } else {
+          this.cartService.changeCart(res.cart);
+          this.toastr.success('Éxito', 'Producto agregado al carrito');
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   getLabelSlider(SLIDERS: any) {
     let miDiv: any = document.getElementById('label-' + SLIDERS.id);
     miDiv.innerHTML = SLIDERS.label;
@@ -89,15 +140,16 @@ export class HomeComponent {
   }
 
   getNewPriceDiscount(product: any, DISCOUNT_FLASH_DISCOUNT: any) {
-    let priceType = this.price_view == 'price_desc' ? 'price_desc' : 'price_pvp';
+    let priceType =
+      this.price_view == 'price_desc' ? 'price_desc' : 'price_pvp';
     let price = product[priceType];
 
     if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) {
-        // Discount in percentage
-        price -= (price * DISCOUNT_FLASH_DISCOUNT.discount) / 100;
+      // Discount in percentage
+      price -= (price * DISCOUNT_FLASH_DISCOUNT.discount) / 100;
     } else {
-        // Discount in price
-        price -= DISCOUNT_FLASH_DISCOUNT.discount;
+      // Discount in price
+      price -= DISCOUNT_FLASH_DISCOUNT.discount;
     }
 
     // console.log(price);
@@ -122,14 +174,13 @@ export class HomeComponent {
   }
   openQuickViewModal(product: any, DISCOUNT_FLASH: any = null) {
     this.product_selected = null;
-    this.variation_selected = null;    
+    this.variation_selected = null;
     setTimeout(() => {
       this.product_selected = product;
-      // if (DISCOUNT_FLASH) {
-      //   this.product_selected.discount_g = DISCOUNT_FLASH.discount;
-      //   this.product_selected.type_discount = DISCOUNT_FLASH.type_discount;     
-      // }
-      modal_view_detail($);
+      if (DISCOUNT_FLASH) {
+        this.product_selected.discount_g = DISCOUNT_FLASH;
+      }
+      // modal_view_detail($);
     }, 50);
   }
   selectVariation(variation: any) {

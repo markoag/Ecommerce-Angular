@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, afterNextRender } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { URL_SERVICIOS } from '../../../config/config';
@@ -9,9 +9,11 @@ import { URL_SERVICIOS } from '../../../config/config';
 })
 export class AuthService {
   token: string = '';
-  user: any = {};
+  user: any;
   constructor(public http: HttpClient, public router: Router) {
-    this.initAuth();
+    afterNextRender(() => {
+      this.initAuth();
+    });
   }
 
   initAuth() {
@@ -24,7 +26,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    let URL = URL_SERVICIOS+'/auth/login_ecommerce';
+    let URL = URL_SERVICIOS + '/auth/login_ecommerce';
     return this.http.post(URL, { email, password }).pipe(
       map((resp: any) => {
         console.log(resp);
@@ -47,25 +49,25 @@ export class AuthService {
   }
 
   register(data: any) {
-    let URL = URL_SERVICIOS+'/auth/register';
+    let URL = URL_SERVICIOS + '/auth/register';
     return this.http.post(URL, data);
   }
 
   verifiedAuth(data: any) {
-    let URL = URL_SERVICIOS+'/auth/verified_auth';
+    let URL = URL_SERVICIOS + '/auth/verified_auth';
     return this.http.post(URL, data);
   }
 
   verifiedMail(data: any) {
-    let URL = URL_SERVICIOS+'/auth/verified_email';
+    let URL = URL_SERVICIOS + '/auth/verified_email';
     return this.http.post(URL, data);
   }
   verifiedCode(data: any) {
-    let URL = URL_SERVICIOS+'/auth/verified_code';
+    let URL = URL_SERVICIOS + '/auth/verified_code';
     return this.http.post(URL, data);
   }
   verifiedNewPass(data: any) {
-    let URL = URL_SERVICIOS+'/auth/new_password';
+    let URL = URL_SERVICIOS + '/auth/new_password';
     return this.http.post(URL, data);
   }
 
@@ -73,7 +75,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.token = '';
-    this.user = {};
+    this.user = null;
 
     setTimeout(() => {
       this.router.navigateByUrl('/login');

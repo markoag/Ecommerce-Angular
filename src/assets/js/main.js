@@ -1930,21 +1930,21 @@ function HOMEINIT($) {
   new WOW().init();
 
   function tp_ecommerce() {
-    $(".tp-cart-minus").on("click", function () {
-      var $input = $(this).parent().find("input");
-      var count = parseInt($input.val()) - 1;
-      count = count < 1 ? 1 : count;
-      $input.val(count);
-      $input.change();
-      return false;
-    });
+    // $(".tp-cart-minus").on("click", function () {
+    //   var $input = $(this).parent().find("input");
+    //   var count = parseInt($input.val()) - 1;
+    //   count = count < 1 ? 1 : count;
+    //   $input.val(count);
+    //   $input.change();
+    //   return false;
+    // });
 
-    $(".tp-cart-plus").on("click", function () {
-      var $input = $(this).parent().find("input");
-      $input.val(parseInt($input.val()) + 1);
-      $input.change();
-      return false;
-    });
+    // $(".tp-cart-plus").on("click", function () {
+    //   var $input = $(this).parent().find("input");
+    //   $input.val(parseInt($input.val()) + 1);
+    //   $input.change();
+    //   return false;
+    // });
 
     $("#slider-range").slider({
       range: true,
@@ -2511,6 +2511,23 @@ function modal_view_detail($) {
     
     $(".tp-size-variation-btn").on("click", function () {
       $(this).addClass("active").siblings().removeClass("active");
-    });  
+    });
+    
+    $(".tp-cart-minus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      var count = parseInt($input.val()) - 1;
+      count = count < 1 ? 1 : count;
+      $input.val(count);
+      $input.change();
+      return false;
+    });
+
+    $(".tp-cart-plus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      $input.val(parseInt($input.val()) + 1);
+      $input.change();
+      return false;
+    });
+    
   },50)
 }
