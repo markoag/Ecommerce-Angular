@@ -495,7 +495,7 @@
                   <div class="col-xl-3 col-lg-3 col-sm-6">
                     <div class="tp-product-item p-relative transition-3 mb-25">
                       <div class="tp-product-thumb p-relative fix m-img">
-                        <a href="#" onclick="return false">
+                        <a [routerLink]="'/producto/' + product.slug">
                           <img
                             [src]="product.image"
                             style="
@@ -705,7 +705,7 @@
                   <div class="col-xl-3 col-lg-3 col-sm-6">
                     <div class="tp-product-item p-relative transition-3 mb-25">
                       <div class="tp-product-thumb p-relative fix m-img">
-                        <a href="#" onclick="return false">
+                        <a [routerLink]="'/producto/' + product.slug">
                           <img
                             [src]="product.image"
                             style="
@@ -915,7 +915,7 @@
                   <div class="col-xl-3 col-lg-3 col-sm-6">
                     <div class="tp-product-item p-relative transition-3 mb-25">
                       <div class="tp-product-thumb p-relative fix m-img">
-                        <a href="#" onclick="return false">
+                        <a [routerLink]="'/producto/' + product.slug">
                           <img
                             [src]="product.image"
                             style="
@@ -1673,7 +1673,7 @@
               <div class="col-xl-4 col-sm-6">
                 <div class="tp-product-item p-relative transition-3 mb-25">
                   <div class="tp-product-thumb p-relative fix m-img">
-                    <a href="#" onclick="return false">
+                    <a [routerLink]="'/producto/' + product.slug">
                       <img
                         [src]="product.image"
                         style="width: 248px; height: 240px; object-fit: contain"
@@ -2014,7 +2014,7 @@
                 @for (product of PRODUCTS_CAROUSEL; track product.id) {
                 <div class="tp-product-item transition-3 mb-25 swiper-slide">
                   <div class="tp-product-thumb p-relative fix m-img">
-                    <a href="#" onclick="return false">
+                    <a [routerLink]="'/producto/' + product.slug">
                       <img
                         [src]="product.image"
                         style="width: 282px; height: 242px; object-fit: contain"
