@@ -2511,8 +2511,12 @@ function modal_view_detail($) {
     
     $(".tp-size-variation-btn").on("click", function () {
       $(this).addClass("active").siblings().removeClass("active");
-    });
-    
+    });    
+  },50)
+}
+
+function modal_quantity($) {
+  setTimeout(() => {
     $(".tp-cart-minus").on("click", function () {
       var $input = $(this).parent().find("input");
       var count = parseInt($input.val()) - 1;
@@ -2528,6 +2532,5 @@ function modal_view_detail($) {
       $input.change();
       return false;
     });
-    
   },50)
 }

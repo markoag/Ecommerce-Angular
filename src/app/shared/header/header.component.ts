@@ -32,7 +32,7 @@ export class HeaderComponent {
       this.user = this.cartService.authService.user;
       if (this.user) {
         this.cartService.listCart().subscribe((res: any) => {
-          console.log(res);
+          // console.log(res);
           res.carts.data.forEach((cart: any) => {
             this.cartService.changeCart(cart)
           });
@@ -43,7 +43,7 @@ export class HeaderComponent {
 
   ngOnInit() {
     this.cartService.currentDataCart$.subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.listCarts = res;
       this.totalCarts = this.listCarts.reduce((sum: number, item: any) => sum + item.total, 0).toFixed(2);
     });    

@@ -77,7 +77,7 @@ export class HomeComponent {
         : 'price_pvp';
   }
 
-  addCart(PRODUCT: any) {
+  addCart(PRODUCT: any, FLASH_DISCOUNT: any = null) {
     if (!this.cartService.authService.user) {
       this.toastr.error(
         'Validación',
@@ -93,18 +93,27 @@ export class HomeComponent {
       return;
     }
 
+    let discount_g = null;
+    if (FLASH_DISCOUNT) {
+      PRODUCT.discount_g = FLASH_DISCOUNT;
+    } else {
+      discount_g = PRODUCT.discount_g;
+    }
+    console.log(PRODUCT);    
+
     let data = {
       product_id: PRODUCT.id,
       product_variation_id: null,
-      type_discount: null,
-      discount: 0,
-      type_campaign: null,
+      type_discount: discount_g ? discount_g.type_discount : null,
+      discount: discount_g ? discount_g.discount : 0,
+      type_campaign: discount_g ? discount_g.type_campaign : null,
       code_coupon: null,
-      code_discount: null,
+      code_discount: discount_g ? discount_g.code : null,
       quantity: 1,
-      price_unit: PRODUCT.price_pvp,
-      subtotal: PRODUCT.price_pvp,
-      total: PRODUCT.price_pvp,
+      // price_unit: PRODUCT.price_pvp,
+      price_unit: this.price_view == 'price_desc' ? PRODUCT.price_desc : PRODUCT.price_pvp,
+      subtotal: this.getTotalPriceProduct(PRODUCT),
+      total: this.getTotalPriceProduct(PRODUCT)*1,
     };
 
     this.cartService.registerCart(data).subscribe(

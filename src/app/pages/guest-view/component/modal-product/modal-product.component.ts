@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../../../home/service/cart.service';
 
 declare function modal_view_detail([]): any;
+declare function modal_quantity([]): any;
 declare let $: any;
 
 @Component({
@@ -36,6 +37,7 @@ export class ModalProductComponent {
         : 'price_pvp';
     setTimeout(() => {
       modal_view_detail($);
+      modal_quantity($);
     }, 50);
   }
 
@@ -89,7 +91,7 @@ export class ModalProductComponent {
     this.sub_variation_selected = null;
     setTimeout(() => {
       this.sub_variation_selected = subvariation;
-      console.log(this.sub_variation_selected);
+      // console.log(this.sub_variation_selected);
     }, 50);
   }
 
@@ -140,6 +142,7 @@ export class ModalProductComponent {
     if (this.product_selected.discount_g) {
       discount_g = this.product_selected.discount_g;
     }
+    console.log(discount_g);
 
     let data = {
       product_id: this.product_selected.id,
@@ -150,7 +153,8 @@ export class ModalProductComponent {
       code_coupon: null,
       code_discount: discount_g ? discount_g.code : null,
       quantity: $('#tp-cart-input-value').val(),
-      price_unit: this.product_selected.price_pvp,
+      // price_unit: this.product_selected.price_pvp,
+      price_unit: this.price_view == 'price_desc' ? this.product_selected.price_desc : this.product_selected.price_pvp,
       subtotal: this.getTotalPriceProduct(this.product_selected),
       total: this.getTotalPriceProduct(this.product_selected) * $('#tp-cart-input-value').val(),
     };

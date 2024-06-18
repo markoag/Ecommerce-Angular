@@ -213,7 +213,7 @@
                 <!-- single item -->
                 <div
                   class="tp-product-details-variation-item"
-                  *ngIf="variation_selected"
+                  *ngIf="variation_selected && variation_selected.subvariation"
                 >
                   <h4 class="tp-product-details-variation-title">
                     {{ variation_selected.subvariation.attribute.name }}:
@@ -225,6 +225,7 @@
                     <button
                       type="button"
                       class="color tp-color-variation-btn mx-1"
+                      (click)="selectSubVariation(subvariation)"
                     >
                       <span
                         [attr.data-bg-color]="subvariation.propertie.code"
@@ -235,11 +236,13 @@
                     </button>
                     } @if ( subvariation.propertie &&
                     !subvariation.propertie.code ) {
-                    <button type="button" class="tp-size-variation-btn mx-1">
+                    <button type="button" class="tp-size-variation-btn mx-1"
+                    (click)="selectSubVariation(subvariation)">
                       <span>{{ subvariation.propertie.name }}</span>
                     </button>
                     } @if ( !subvariation.propertie ){
-                    <button type="button" class="tp-size-variation-btn mx-1">
+                    <button type="button" class="tp-size-variation-btn mx-1"
+                    (click)="selectSubVariation(subvariation)">
                       <span>{{ subvariation.value_add }}</span>
                     </button>
                     } }
@@ -249,7 +252,7 @@
 
               <!-- actions -->
               <div class="tp-product-details-action-wrapper">
-                <h3 class="tp-product-details-action-title">Quantity</h3>
+                <h3 class="tp-product-details-action-title">Cantidad</h3>
                 <div
                   class="tp-product-details-action-item-wrapper d-flex align-items-center"
                 >
@@ -272,7 +275,7 @@
                           />
                         </svg>
                       </span>
-                      <input class="tp-cart-input" type="text" value="1" />
+                      <input class="tp-cart-input" id="tp-cart-input-value" type="text" value="1" />
                       <span class="tp-cart-plus">
                         <svg
                           width="11"
@@ -300,13 +303,13 @@
                     </div>
                   </div>
                   <div class="tp-product-details-add-to-cart mb-15 w-100">
-                    <button class="tp-product-details-add-to-cart-btn w-100">
-                      Add To Cart
+                    <button class="tp-product-details-add-to-cart-btn w-100" (click)="addCart()">
+                      Añadir al carrito
                     </button>
                   </div>
                 </div>
                 <button class="tp-product-details-buy-now-btn w-100">
-                  Buy Now
+                  Comprar ahora
                 </button>
               </div>
               <div class="tp-product-details-action-sm">

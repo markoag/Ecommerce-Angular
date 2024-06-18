@@ -19084,6 +19084,7 @@ product all slider
   font-weight: 400;
   font-size: 16px;
   color: var(--tp-common-black);
+  display: block; /* Asegura que el padding se aplique correctamente */
 }
 .tp-cart-title a:hover {
   color: var(--tp-theme-primary);
