@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-pas
 import { LandingProductComponent } from './pages/guest-view/landing-product/landing-product.component';
 import { authGuard } from './pages/auth/service/auth.guard';
 import { CartComponent } from './pages/auth-view/cart/cart.component';
+import { CheckoutComponent } from './pages/auth-view/checkout/checkout.component';
 
 export const routes: Routes = [
   {
@@ -32,5 +33,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
     path: 'carrito-de-compras',
     component: CartComponent,
+  },
+  {
+    canActivate: [authGuard],
+    path: 'checkout',
+    component: CheckoutComponent,
   },
 ];
