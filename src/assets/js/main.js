@@ -659,9 +659,9 @@ function HOMEINIT($) {
 
   ////////////////////////////////////////////////////
   // 12. Nice Select Js
-  $(
-    ".tp-header-search-category select, .tp-shop-area select, .tp-checkout-area select, .profile__area select"
-  ).niceSelect();
+  // $(
+  //   ".tp-header-search-category select, .tp-shop-area select, .tp-checkout-area select, .profile__area select"
+  // ).niceSelect();
 
   ////////////////////////////////////////////////////
   // 13. Smooth Scroll Js
@@ -2270,7 +2270,6 @@ function password_show_toggle($) {
 }
 
 function initializeSwiper($) {
-
   let tp_rtl = localStorage.getItem("tp_dir");
   let rtl_setting = tp_rtl == "rtl";
 
@@ -2301,7 +2300,7 @@ function initializeSwiper($) {
       },
     },
   });
-  
+
   mainSlider.on("slideChangeTransitionStart", function (realIndex) {
     if (
       $(
@@ -2327,7 +2326,7 @@ function data_values($) {
 function slider_product($) {
   let tp_rtl = localStorage.getItem("tp_dir");
   let rtl_setting = tp_rtl == "rtl";
-  
+
   let slider = new Swiper(".tp-product-arrival-active", {
     slidesPerView: 4,
     spaceBetween: 30,
@@ -2496,11 +2495,11 @@ function slider_product($) {
 
   setTimeout(() => {
     $("[data-countdown]").countdown();
-  },50);
+  }, 50);
 }
 
 function modal_view_detail($) {
-  setTimeout(() => {    
+  setTimeout(() => {
     $("[data-bg-color]").each(function () {
       $(this).css("background-color", $(this).attr("data-bg-color"));
     });
@@ -2508,11 +2507,11 @@ function modal_view_detail($) {
     $(".tp-color-variation-btn").on("click", function () {
       $(this).addClass("active").siblings().removeClass("active");
     });
-    
+
     $(".tp-size-variation-btn").on("click", function () {
       $(this).addClass("active").siblings().removeClass("active");
-    });    
-  },50)
+    });
+  }, 50);
 }
 
 function modal_quantity($) {
@@ -2532,5 +2531,13 @@ function modal_quantity($) {
       $input.change();
       return false;
     });
-  },50)
+  }, 50);
+}
+
+function selectHeader($) {
+  setTimeout(() => {
+    $(
+        ".tp-header-search-category select, .tp-shop-area select, .tp-checkout-area select, .profile__area select"
+      ).niceSelect();
+  }, 50);
 }

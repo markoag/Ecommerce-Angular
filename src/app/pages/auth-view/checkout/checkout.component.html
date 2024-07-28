@@ -23,7 +23,7 @@
   <!-- checkout area start -->
   <section class="tp-checkout-area pb-120" data-bg-color="#EFF1F5">
     <div class="container">
-      <div class="card p-3 mb-3" *ngIf="isLoading$ | async">
+      <div class="card p-3 mb-3">
         <div class="row">
           <div class="col-md-6">
             <div class="profile__address-item d-sm-flex align-items-start">
@@ -54,7 +54,11 @@
                 </span>
               </div>
               <div class="profile__address-content">
-                <h3 class="profile__address-title">+ Nueva Dirección</h3>
+                <h3 class="profile__address-title">
+                  <a href="#" onclick="return false" (click)="resetAddress()"
+                    >+ Nueva Dirección</a
+                  >
+                </h3>
               </div>
             </div>
           </div>
@@ -87,9 +91,19 @@
                 </span>
               </div>
               <div class="profile__address-content">
-                <h3 class="profile__address-title">Dirección de envío</h3>
+                <h3 class="profile__address-title">
+                  <a
+                    href="#"
+                    onclick="return false"
+                    (click)="selectedAddress(addres)"
+                    >Dirección de envío</a
+                  >
+                </h3>
                 <p><span>Nombre:</span>{{ addres.user.name }}</p>
-                <p><span>Empresa:</span>{{ addres.company }}</p>
+                <p *ngIf="addres.company">
+                  <span>Empresa:</span>{{ addres.company }}
+                </p>
+                <p><span>Teléfono:</span>{{ addres.user.phone }}</p>
                 <p>
                   <span>Dirección:</span
                   >{{
@@ -100,13 +114,17 @@
                       addres.parish.name
                   }}
                 </p>
-                <p><span>Calle Principal:</span>{{ addres.main_street }}</p>
                 <p>
-                  <span>Calle Secundaria:</span>{{ addres.secondary_street }}
+                  <span>Calles:</span
+                  >{{ addres.main_street + " & " + addres.secondary_street }}
                 </p>
                 <p><span>Referencia:</span>{{ addres.reference }}</p>
-                <p><span>Sector:</span>{{ addres.sector }}</p>
-                <p><span>Número de Casa:</span>{{ addres.house_number }}</p>
+                <p *ngIf="addres.sector">
+                  <span>Sector:</span>{{ addres.sector }}
+                </p>
+                <p *ngIf="addres.house_number">
+                  <span>Número de Casa:</span>{{ addres.house_number }}
+                </p>
               </div>
             </div>
           </div>
@@ -126,6 +144,7 @@
                       <div class="tp-checkout-input">
                         <label>Provincia <span>*</span></label>
                         <select
+                          class="form-control form-select-solid"
                           name="province"
                           [(ngModel)]="province"
                           (change)="changeProvince()"
@@ -134,28 +153,20 @@
                           <ng-container *ngFor="let item of provinces">
                             <option [value]="item.id">{{ item.name }}</option>
                           </ng-container>
-                          <!-- <option
-                            *ngFor="let item of provinces"
-                            [value]="item.id"
-                          >
-                            {{ item.name }}
-                          </option> -->
                         </select>
                       </div>
-                      <!-- <div *ngFor="let province of provinces">
-                        {{ province.id }} - {{ province.name }}
-                      </div> -->
                     </div>
                     <div class="col-md-6">
                       <div class="tp-checkout-input">
                         <label>Ciudad <span>*</span></label>
                         <select
+                          class="form-control form-select-solid"
                           name="city"
                           [(ngModel)]="city"
                           (change)="changeCity()"
                         >
                           <option value="">--Seleccionar--</option>
-                          <ng-container *ngFor="let item of cities">
+                          <ng-container *ngFor="let item of citiesBackups">
                             <option [value]="item.code">{{ item.name }}</option>
                           </ng-container>
                         </select>
@@ -164,9 +175,13 @@
                     <div class="col-md-6">
                       <div class="tp-checkout-input">
                         <label>Parroquia <span>*</span></label>
-                        <select name="parish" [(ngModel)]="parish">
+                        <select
+                          class="form-control form-select-solid"
+                          name="parish"
+                          [(ngModel)]="parish"
+                        >
                           <option value="">--Seleccionar--</option>
-                          <ng-container *ngFor="let item of parishes">
+                          <ng-container *ngFor="let item of parishesBackups">
                             <option [value]="item.code">{{ item.name }}</option>
                           </ng-container>
                         </select>
@@ -175,56 +190,97 @@
                     <div class="col-md-12">
                       <div class="tp-checkout-input">
                         <label>Empresa o local</label>
-                        <input type="text" placeholder="TazDevelopers S.A." />
+                        <input
+                          type="text"
+                          name="company"
+                          [(ngModel)]="company"
+                          placeholder="TazDevelopers S.A."
+                        />
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="tp-checkout-input">
                         <label>Calle Principal <span>*</span></label>
-                        <input type="text" placeholder="Av. Quito" />
+                        <input
+                          type="text"
+                          name="main_street"
+                          [(ngModel)]="main_street"
+                          placeholder="Av. Quito"
+                        />
                       </div>
                       <div class="tp-checkout-input">
                         <label
                           >Calle Secundaria o Intersección <span>*</span></label
                         >
-                        <input type="text" placeholder="Río Chimbo" />
+                        <input
+                          type="text"
+                          name="secondary_street"
+                          [(ngModel)]="secondary_street"
+                          placeholder="Río Chimbo"
+                        />
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="tp-checkout-input">
                         <label>Referencia <span>*</span></label>
-                        <input type="text" placeholder="Junto al Colegio JME" />
+                        <input
+                          type="text"
+                          name="reference"
+                          [(ngModel)]="reference"
+                          placeholder="Junto al Colegio JME"
+                        />
                       </div>
                     </div>
 
                     <div class="col-md-6">
                       <div class="tp-checkout-input">
                         <label>Sector</label>
-                        <input type="text" placeholder="La quito" />
+                        <input
+                          type="text"
+                          name="sector"
+                          [(ngModel)]="sector"
+                          placeholder="La quito"
+                        />
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="tp-checkout-input">
                         <label>Número de Casa</label>
-                        <input type="text" placeholder="000" />
+                        <input
+                          type="text"
+                          name="house_number"
+                          [(ngModel)]="house_number"
+                          placeholder="000"
+                        />
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="tp-checkout-input">
                         <label>Order notes (optional)</label>
                         <textarea
+                          [(ngModel)]="description"
+                          name="description"
                           placeholder="Notes about your order, e.g. special notes for delivery."
                         ></textarea>
                       </div>
                     </div>
-                    <div class="tp-checkout-btn-wrapper">
-                      <a
-                        href="#"
+                    <div class="col-md-12">
+                      <button
                         type="button"
                         class="tp-checkout-btn w-100"
+                        *ngIf="!address_selected"
                         (click)="registerAddress()"
-                        >Registrar Dirección</a
                       >
+                        Registrar dirección
+                      </button>
+                      <button
+                        type="button"
+                        class="tp-checkout-btn w-100"
+                        *ngIf="address_selected"
+                        (click)="editAddress()"
+                      >
+                        Editar dirección
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -324,6 +380,7 @@
                   <a href="#">Qué es PayPal?</a></label
                 >
               </div>
+              <div #paypal></div>
             </div>
             <div class="tp-checkout-agree">
               <div class="tp-checkout-option">

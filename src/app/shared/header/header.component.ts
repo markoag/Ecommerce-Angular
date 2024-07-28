@@ -5,6 +5,9 @@ import { CartService } from '../../pages/home/service/cart.service';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
+declare function selectHeader([]): any;
+declare let $: any;
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -25,8 +28,11 @@ export class HeaderComponent {
   ) {
     afterNextRender(() => {
       this.homeService.menus().subscribe((res: any) => {
-        // console.log(res);
+        console.log(res);
         this.categories_menu = res.categories_menu;
+        // setTimeout(() => {
+        //   selectHeader($);
+        // }, 50);
       });
 
       this.user = this.cartService.authService.user;
