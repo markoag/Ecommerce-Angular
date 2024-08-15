@@ -8,7 +8,7 @@ import { CartService } from '../../home/service/cart.service';
 import { UserAddressService } from '../service/user-address.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 declare var paypal: any;
@@ -49,7 +49,8 @@ export class CheckoutComponent {
   constructor(
     public cartService: CartService,
     public addressService: UserAddressService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public router: Router,
   ) {
     afterNextRender(() => {
       this.addressService.listAddress().subscribe((res: any) => {
@@ -150,6 +151,7 @@ export class CheckoutComponent {
           this.cartService.checkout(dataSale).subscribe((res: any) => {
             console.log(res);
             this.toastr.success('Éxito', 'Tú compra se realizó correctamente');
+            this.router.navigateByUrl('/gracias-por-tu-compra/' + Order.purchase_units[0].payments.captures[0].id);
             // Redireccion a la pagina de agradecimiento
             
           });

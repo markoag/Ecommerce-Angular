@@ -2504,11 +2504,11 @@ function modal_view_detail($) {
       $(this).css("background-color", $(this).attr("data-bg-color"));
     });
 
-    $(".tp-color-variation-btn").on("click", function () {
+    $(".tp-color-variation-btn")?.on("click", function () {
       $(this).addClass("active").siblings().removeClass("active");
     });
 
-    $(".tp-size-variation-btn").on("click", function () {
+    $(".tp-size-variation-btn")?.on("click", function () {
       $(this).addClass("active").siblings().removeClass("active");
     });
   }, 50);
