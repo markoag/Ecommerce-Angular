@@ -30,6 +30,7 @@ export class LandingProductComponent {
   sub_variation_selected: any = null;
   product_selected_modal: any;
   price_view: any = null;
+  plus: number = 0;
 
   constructor(
     public homeService: HomeService,
@@ -37,7 +38,7 @@ export class LandingProductComponent {
     private toastr: ToastrService,
     private router: Router,
     private authService: AuthService,
-    public cartService: CartService,
+    public cartService: CartService
   ) {
     this.activeRoute.params.subscribe((res: any) => {
       this.PRODUCT_SLUG = res.slug;
@@ -82,6 +83,8 @@ export class LandingProductComponent {
     let priceType =
       this.price_view == 'price_desc' ? 'price_desc' : 'price_pvp';
     let price = product[priceType];
+    // Sumar this.plus al precio antes de aplicar el descuento si existe
+    price += this.plus;
 
     if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) {
       // Discount in percentage
@@ -98,9 +101,9 @@ export class LandingProductComponent {
       return this.getNewPriceDiscount(product, product.discount_g);
     }
     if (this.price_view == 'price_desc') {
-      return product.price_desc;
+      return product.price_desc + this.plus;
     } else {
-      return product.price_pvp;
+      return product.price_pvp + this.plus;
     }
   }
   getTotalPriceView(product: any) {
@@ -114,7 +117,9 @@ export class LandingProductComponent {
   selectVariation(variation: any) {
     this.variation_selected = null;
     this.sub_variation_selected = null;
+    this.plus = 0;
     setTimeout(() => {
+      this.plus += variation.price_add;
       this.variation_selected = variation;
       modal_view_detail($);
     }, 50);
@@ -122,7 +127,9 @@ export class LandingProductComponent {
 
   selectSubVariation(subvariation: any) {
     this.sub_variation_selected = null;
+    this.plus = this.variation_selected.price_add;
     setTimeout(() => {
+      this.plus += subvariation.price_add;
       this.sub_variation_selected = subvariation;
       // console.log(this.sub_variation_selected);
     }, 50);
@@ -176,7 +183,7 @@ export class LandingProductComponent {
     ) {
       product_variation_id = this.sub_variation_selected.id;
     }
-    
+
     let discount_g = null;
 
     if (this.PRODUCT_SELECTED.discount_g) {
@@ -194,9 +201,14 @@ export class LandingProductComponent {
       code_discount: discount_g ? discount_g.code : null,
       quantity: $('#tp-cart-input-value').val(),
       // price_unit: this.PRODUCT_SELECTED.price_pvp,
-      price_unit: this.price_view == 'price_desc' ? this.PRODUCT_SELECTED.price_desc : this.PRODUCT_SELECTED.price_pvp,
+      price_unit:
+        this.price_view == 'price_desc'
+          ? this.PRODUCT_SELECTED.price_desc
+          : this.PRODUCT_SELECTED.price_pvp,
       subtotal: this.getTotalPriceProduct(this.PRODUCT_SELECTED),
-      total: this.getTotalPriceProduct(this.PRODUCT_SELECTED) * $('#tp-cart-input-value').val(),
+      total:
+        this.getTotalPriceProduct(this.PRODUCT_SELECTED) *
+        $('#tp-cart-input-value').val(),
     };
 
     this.cartService.registerCart(data).subscribe(

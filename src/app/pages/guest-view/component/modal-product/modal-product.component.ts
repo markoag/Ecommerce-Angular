@@ -22,6 +22,7 @@ export class ModalProductComponent {
   variation_selected: any;
   sub_variation_selected: any;
   price_view: any = null;
+  plus: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -45,7 +46,8 @@ export class ModalProductComponent {
     let priceType =
       this.price_view == 'price_desc' ? 'price_desc' : 'price_pvp';
     let price = product[priceType];
-    // console.log(DISCOUNT_FLASH_DISCOUNT);
+    // Sumar this.plus al precio antes de aplicar el descuento si existe
+    price += this.plus;
 
     if (DISCOUNT_FLASH_DISCOUNT.type_discount == 1) {
       // Discount in percentage
@@ -64,9 +66,9 @@ export class ModalProductComponent {
       return this.getNewPriceDiscount(product, product.discount_g);
     }
     if (this.price_view == 'price_desc') {
-      return product.price_desc;
+      return product.price_desc + this.plus;
     } else {
-      return product.price_pvp;
+      return product.price_pvp + this.plus;
     }
   }
 
@@ -81,7 +83,9 @@ export class ModalProductComponent {
   selectVariation(variation: any) {
     this.variation_selected = null;
     this.sub_variation_selected = null;
+    this.plus = 0;
     setTimeout(() => {
+      this.plus += variation.price_add;
       this.variation_selected = variation;
       console.log(this.variation_selected);
       modal_view_detail($);
@@ -89,7 +93,9 @@ export class ModalProductComponent {
   }
   selectSubVariation(subvariation: any) {
     this.sub_variation_selected = null;
+    this.plus = this.variation_selected.price_add;
     setTimeout(() => {
+      this.plus += subvariation.price_add;
       this.sub_variation_selected = subvariation;
       // console.log(this.sub_variation_selected);
     }, 50);
@@ -136,7 +142,7 @@ export class ModalProductComponent {
     ) {
       product_variation_id = this.sub_variation_selected.id;
     }
-    
+
     let discount_g = null;
 
     if (this.product_selected.discount_g) {
@@ -154,9 +160,14 @@ export class ModalProductComponent {
       code_discount: discount_g ? discount_g.code : null,
       quantity: $('#tp-cart-input-value').val(),
       // price_unit: this.product_selected.price_pvp,
-      price_unit: this.price_view == 'price_desc' ? this.product_selected.price_desc : this.product_selected.price_pvp,
+      price_unit:
+        this.price_view == 'price_desc'
+          ? this.product_selected.price_desc
+          : this.product_selected.price_pvp,
       subtotal: this.getTotalPriceProduct(this.product_selected),
-      total: this.getTotalPriceProduct(this.product_selected) * $('#tp-cart-input-value').val(),
+      total:
+        this.getTotalPriceProduct(this.product_selected) *
+        $('#tp-cart-input-value').val(),
     };
 
     this.cartService.registerCart(data).subscribe(

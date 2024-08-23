@@ -50,7 +50,7 @@ export class CheckoutComponent {
     public cartService: CartService,
     public addressService: UserAddressService,
     private toastr: ToastrService,
-    public router: Router,
+    public router: Router
   ) {
     afterNextRender(() => {
       this.addressService.listAddress().subscribe((res: any) => {
@@ -106,7 +106,10 @@ export class CheckoutComponent {
             !this.secondary_street ||
             !this.reference
           ) {
-            this.toastr.error('Validación', 'Los campos de la dirección son obligatorios');
+            this.toastr.error(
+              'Validación',
+              'Los campos de la dirección son obligatorios'
+            );
             return;
           }
 
@@ -151,9 +154,14 @@ export class CheckoutComponent {
           this.cartService.checkout(dataSale).subscribe((res: any) => {
             console.log(res);
             this.toastr.success('Éxito', 'Tú compra se realizó correctamente');
-            this.router.navigateByUrl('/gracias-por-tu-compra/' + Order.purchase_units[0].payments.captures[0].id);
+            this.cartService.resetCart();
             // Redireccion a la pagina de agradecimiento
-            
+            setTimeout(() => {
+              this.router.navigateByUrl(
+                '/gracias-por-tu-compra/' +
+                  Order.purchase_units[0].payments.captures[0].id
+              );
+            }, 50);
           });
           // return actions.order.capture().then(captureOrderHandler);
         },
