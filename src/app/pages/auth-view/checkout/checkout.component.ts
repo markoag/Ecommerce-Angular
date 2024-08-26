@@ -287,6 +287,7 @@ export class CheckoutComponent {
   }
 
   resetAddress() {
+    this.address_selected = null;
     this.province = 0;
     this.city = 0;
     this.parish = 0;

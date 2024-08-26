@@ -22,9 +22,9 @@ export class UserAddressService {
       Authorization: 'Bearer ' + this.authService.token,
     });
     let URL = URL_SERVICIOS + '/ecommerce/user_address';
-    return this.http.get(URL, { headers: headers }).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
   configAll() {
@@ -33,9 +33,9 @@ export class UserAddressService {
       Authorization: 'Bearer ' + this.authService.token,
     });
     let URL = URL_SERVICIOS + '/ecommerce/user_address/config';
-    return this.http.get(URL, { headers: headers }).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );    
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
   registerAddress(data: any) {
@@ -44,9 +44,9 @@ export class UserAddressService {
       Authorization: 'Bearer ' + this.authService.token,
     });
     let URL = URL_SERVICIOS + '/ecommerce/user_address';
-    return this.http.post(URL, data, { headers: headers }).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
   updateAddress(addres_id: string, data: any) {
@@ -55,9 +55,9 @@ export class UserAddressService {
       Authorization: 'Bearer ' + this.authService.token,
     });
     let URL = URL_SERVICIOS + '/ecommerce/user_address/' + addres_id;
-    return this.http.put(URL, data, { headers: headers }).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-      );
+    return this.http
+      .put(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
   deleteAddress(addres_id: string) {
@@ -66,8 +66,8 @@ export class UserAddressService {
       Authorization: 'Bearer ' + this.authService.token,
     });
     let URL = URL_SERVICIOS + '/ecommerce/user_address/' + addres_id;
-    return this.http.delete(URL, { headers: headers }).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http
+      .delete(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 }

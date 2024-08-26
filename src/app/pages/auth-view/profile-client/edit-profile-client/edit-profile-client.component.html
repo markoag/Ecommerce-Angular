@@ -1,0 +1,128 @@
+<div class="profile__info">
+  <h3 class="profile__info-title">Datos Personales</h3>
+  <div class="profile__info-content">
+    <form action="#">
+      <div class="row">
+        <div class="col-xxl-6 col-md-6">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <input
+                type="text"
+                placeholder="Ingresa tu nombre"
+                name="name"
+                [(ngModel)]="name"
+              />
+              <span><i class="fa-regular fa-user"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-6">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <input
+                type="text"
+                placeholder="Ingresa tu apellido"
+                name="last_name"
+                [(ngModel)]="last_name"
+              />
+              <span><i class="fa-regular fa-user"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-6">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <input
+                type="email"
+                placeholder="Ingresa tu email"
+                name="email"
+                [(ngModel)]="email"
+              />
+              <span><i class="fa-regular fa-envelope"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-6">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <input
+                type="text"
+                placeholder="Ingresa tu facebook"
+                name="fb"
+                [(ngModel)]="fb"
+              />
+              <span>
+                <i class="fa-brands fa-facebook-f"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-xxl-6 col-md-6">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <input
+                type="text"
+                placeholder="Ingresa tu instagram"
+                name="ig"
+                [(ngModel)]="ig"
+              />
+              <span><i class="fa-brands fa-instagram"></i></span>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-xxl-6 col-md-6">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <input
+                type="text"
+                placeholder="Ingresa tu whatsapp"
+                name="phone"
+                [(ngModel)]="phone"
+              />
+              <span><i class="fa-brands fa-whatsapp"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-6">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <select name="gender" [(ngModel)]="gender" class="form-control form-select-solid">
+                <option value="M">Másculino</option>
+                <option value="F">Femenino</option>
+                <option value="O">Otros</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-12">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <input
+                type="text"
+                placeholder="Ingresa tu dirección"
+                name="address_user"
+                [(ngModel)]="address_user"
+              />
+              <span><i class="fa-regular fa-location-dot"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-12">
+          <div class="profile__input-box">
+            <div class="profile__input">
+              <textarea placeholder="Ingresa tu biografía" name="bio" [(ngModel)]="bio">
+Hola, esta es mi biografía....</textarea
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-12">
+          <div class="profile__btn">
+            <button type="button" (click)="updateUser()" class="tp-btn">Actualizar Perfil</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

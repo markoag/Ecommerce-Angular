@@ -99,19 +99,19 @@
                     >Dirección de envío</a
                   >
                 </h3>
-                <p><span>Nombre:</span>{{ addres.user.name }}</p>
+                <p><span>Nombre:</span>{{ addres.user?.name }}</p>
                 <p *ngIf="addres.company">
                   <span>Empresa:</span>{{ addres.company }}
                 </p>
-                <p><span>Teléfono:</span>{{ addres.user.phone }}</p>
+                <p><span>Teléfono:</span>{{ addres.user?.phone }}</p>
                 <p>
                   <span>Dirección:</span
                   >{{
-                    addres.province.name +
+                    addres.province?.name +
                       " / " +
-                      addres.city.name +
+                      addres.city?.name +
                       " / " +
-                      addres.parish.name
+                      addres.parish?.name
                   }}
                 </p>
                 <p>
@@ -256,7 +256,7 @@
                     </div>
                     <div class="col-md-12">
                       <div class="tp-checkout-input">
-                        <label>Order notes (optional)</label>
+                        <label>Otras Notas (optional)</label>
                         <textarea
                           [(ngModel)]="description"
                           name="description"

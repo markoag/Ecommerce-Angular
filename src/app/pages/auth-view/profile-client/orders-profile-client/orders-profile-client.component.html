@@ -1,0 +1,42 @@
+<div class="profile__ticket table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nº Transacción</th>
+        <th scope="col">Método de pago</th>
+        <th scope="col">Fecha de registro</th>
+        <th scope="col">Total</th>
+        <th scope="col">Visualizar</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (sale of sales; track sale.id) {
+      <tr>
+        <th scope="row">#{{ sale.n_transaction }}</th>
+        <td data-info="title">{{ sale.method_payment }}</td>
+        <td>{{ sale.created_at }}</td>
+        <td data-info="status pending">${{ sale.total }}</td>
+        <td>
+          <a
+            href="#"
+            onclick="return false;"
+            (click)="detailShow(sale)"
+            class="tp-logout-btn"
+            >Detalle</a
+          >
+        </td>
+      </tr>
+      @for (sale_detail of sale.sale_details; track sale_detail.id) {
+      <tr *ngIf="sale.sale_detail_show">
+        <th scope="row">
+            <img [src]="sale_detail.product.image" style="width: 25%; object-fit: contain;" alt="">
+        </th>
+        <td data-info="title">{{ sale_detail.product.title }}</td>
+        <td>{{ sale_detail.quantity }}</td>
+        <td data-info="status pending">${{ sale_detail.subtotal }}</td>
+        <td data-info="status pending">${{ sale_detail.total }}</td>        
+      </tr>
+      } }
+    </tbody>
+  </table>
+</div>
