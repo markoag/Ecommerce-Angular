@@ -22,6 +22,9 @@ export class EditProfileClientComponent {
   gender: string = '';
   address_user: string = '';
   description: string = '';
+  img_preview: string =
+    'https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg';
+  file_image: any = null;
 
   constructor(
     public profileClient: ProfileClientService,
@@ -37,7 +40,23 @@ export class EditProfileClientComponent {
       this.fb = res.fb;
       this.gender = res.gender;
       this.address_user = res.address_user;
+      this.file_image = res.avatar;
     });
+  }
+
+  processFile($event: any) {
+    if ($event.target.files[0].type.indexOf('image') < 0) {
+      this.toaster.error(
+        'Validación',
+        'El archivo seleccionado no es una imagen'
+      );
+      return;
+    }
+    this.file_image = $event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(this.file_image);
+    reader.onloadend = () => (this.img_preview = reader.result as string);
+    //this.isLoadingView();
   }
 
   updateUser() {
@@ -62,6 +81,7 @@ export class EditProfileClientComponent {
       fb: this.fb,
       gender: this.gender,
       address_user: this.address_user,
+      avatar: this.file_image,
     };
     this.profileClient.updateProfile(data).subscribe((res: any) => {
       console.log(res);

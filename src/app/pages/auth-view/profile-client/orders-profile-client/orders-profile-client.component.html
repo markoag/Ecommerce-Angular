@@ -1,5 +1,5 @@
 <div class="profile__ticket table-responsive">
-  <table class="table">
+  <table class="table" *ngIf="!sale_detail_review">
     <thead>
       <tr>
         <th scope="col">Nº Transacción</th>
@@ -28,15 +28,95 @@
       </tr>
       @for (sale_detail of sale.sale_details; track sale_detail.id) {
       <tr *ngIf="sale.sale_detail_show">
-        <th scope="row">
-            <img [src]="sale_detail.product.image" style="width: 25%; object-fit: contain;" alt="">
+        <th scope="row" class="center-content">
+          <img
+            [src]="sale_detail.product.image"
+            style="width: 25%; object-fit: contain;"
+            alt=""
+          />
+          <br />
+          <a
+            href="#"
+            onclick="return false;"
+            (click)="reviewShow(sale_detail)"
+            class="tp-logout-btn"
+            >Reseña</a
+          >
         </th>
         <td data-info="title">{{ sale_detail.product.title }}</td>
         <td>{{ sale_detail.quantity }}</td>
         <td data-info="status pending">${{ sale_detail.subtotal }}</td>
-        <td data-info="status pending">${{ sale_detail.total }}</td>        
+        <td data-info="status pending">${{ sale_detail.total }}</td>
       </tr>
       } }
     </tbody>
   </table>
+  <div class="tp-product-details-review-form" *ngIf="sale_detail_review">
+    <h3 class="tp-product-details-review-form-title">Reseña: "{{ sale_detail_review.product.title }}"</h3>
+    <!-- <p>
+      Tu dirección de correo electrónico no será publicada. Los campos con (*)
+      son obligatorios
+    </p> -->    
+    <form action="#">
+      <div
+        class="tp-product-details-review-form-rating d-flex align-items-center"
+      >
+        <p>Tu calificación:</p>
+        <div
+          class="tp-product-details-review-form-rating-icon d-flex align-items-center"
+        >
+          <span
+            class="start-large"
+            [ngClass]="{ 'start-gris': rating < 1 }"
+            (click)="selectedRating(1)"
+            ><i class="fa-solid fa-star"></i
+          ></span>
+          <span
+            class="start-large"
+            [ngClass]="{ 'start-gris': rating < 2 }"
+            (click)="selectedRating(2)"
+            ><i class="fa-solid fa-star"></i
+          ></span>
+          <span
+            class="start-large"
+            [ngClass]="{ 'start-gris': rating < 3 }"
+            (click)="selectedRating(3)"
+            ><i class="fa-solid fa-star"></i
+          ></span>
+          <span
+            class="start-large"
+            [ngClass]="{ 'start-gris': rating < 4 }"
+            (click)="selectedRating(4)"
+            ><i class="fa-solid fa-star"></i
+          ></span>
+          <span
+            class="start-large"
+            [ngClass]="{ 'start-gris': rating < 5 }"
+            (click)="selectedRating(5)"
+            ><i class="fa-solid fa-star"></i
+          ></span>
+        </div>
+      </div>
+      <div class="tp-product-details-review-input-wrapper">
+        <div class="tp-product-details-review-input-box">
+          <div class="tp-product-details-review-input">
+            <textarea
+              id="message"
+              name="message"
+              [(ngModel)]="message"
+              placeholder="Escribe tu reseña aquí..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="tp-product-details-review-btn-wrapper">
+        <button type="button" class="tp-product-details-buy-now-btn" (click)="saveReview()">
+          {{ sale_detail_review.review ? 'Editar Reseña' : 'Registrar Reseña' }}
+        </button>
+        <button type="button" class="tp-product-details-buy-now-btn mx-3" (click)="backlist()">
+          Salir
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

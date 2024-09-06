@@ -31,6 +31,7 @@ export class LandingProductComponent {
   product_selected_modal: any;
   price_view: any = null;
   plus: number = 0;
+  reviews: any = [];
 
   constructor(
     public homeService: HomeService,
@@ -58,6 +59,7 @@ export class LandingProductComponent {
             this.PRODUCT_SELECTED = res.product;
             this.PRODUCTS_RELATEDS = res.products_relateds.data;
             this.DISCOUNT_CAMPAIGN = res.discount_campaign;
+            this.reviews = res.reviews;
             if (this.DISCOUNT_CAMPAIGN) {
               this.PRODUCT_SELECTED.discount_g = this.DISCOUNT_CAMPAIGN;
             }

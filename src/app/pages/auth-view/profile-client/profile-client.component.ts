@@ -6,19 +6,33 @@ import { OrdersProfileClientComponent } from './orders-profile-client/orders-pro
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../auth/service/auth.service';
 
 @Component({
   selector: 'app-profile-client',
   standalone: true,
-  imports: [EditProfileClientComponent, PasswordProfileClientComponent, AddressProfileClientComponent, OrdersProfileClientComponent, CommonModule, RouterModule, FormsModule],
+  imports: [
+    EditProfileClientComponent,
+    PasswordProfileClientComponent,
+    AddressProfileClientComponent,
+    OrdersProfileClientComponent,
+    CommonModule,
+    RouterModule,
+    FormsModule,
+  ],
   templateUrl: './profile-client.component.html',
-  styleUrl: './profile-client.component.css'
+  styleUrl: './profile-client.component.css',
 })
 export class ProfileClientComponent {
-
   selectedTab: number = 0;
 
-  selectTab(val: number) {    
+  constructor(public authService: AuthService) {}
+
+  selectTab(val: number) {
     this.selectedTab = val;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

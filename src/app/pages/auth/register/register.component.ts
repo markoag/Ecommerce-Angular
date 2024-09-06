@@ -42,13 +42,30 @@ export class RegisterComponent {
       email: this.email,
       password: this.password,
       phone: this.phone,
-    }
-    this.authService.register(data).subscribe((res: any) => {
-      console.log(res);
-      this.toast.success('Exito','Ingresa a tu correo para activar tu cuenta');
-      setTimeout(() => {
-        this.router.navigateByUrl('/login');
-      }, 500);
-    });
+    };
+    this.authService.register(data).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.toast.success(
+          'Exito',
+          'Ingresa a tu correo para activar tu cuenta'
+        );
+        setTimeout(() => {
+          this.router.navigateByUrl('/login');
+        }, 500);
+      },
+      (error: any) => {
+        if (error.status === 400 && error.error) {
+          const validationErrors = JSON.parse(error.error);
+          for (const key in validationErrors) {
+            if (validationErrors.hasOwnProperty(key)) {
+              this.toast.error('Validación', validationErrors[key].join(', '));
+            }
+          }
+        } else {
+          this.toast.error('Error', 'Ocurrió un error inesperado');
+        }
+      }
+    );
   }
 }

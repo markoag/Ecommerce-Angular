@@ -94,6 +94,27 @@
             </div>
           </div>
         </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+          <label class="form-label"
+            >Sube tu Avatar: (Opcional)
+          </label
+          >
+          <div class="custom-file">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="customFile"
+              accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"
+              (change)="processFile($event)"
+            />
+            <label class="custom-file-label" for="customFile"></label>
+          </div>
+          <div class="">
+            <img class="img py-3" [src]="img_preview" width="200" alt="" />
+          </div>
+        </div>
+
         <div class="col-xxl-12">
           <div class="profile__input-box">
             <div class="profile__input">
