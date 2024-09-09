@@ -1,12 +1,9 @@
-import { Component, afterNextRender } from '@angular/core';
+import { ChangeDetectorRef, Component, afterNextRender } from '@angular/core';
 import { HomeService } from '../../pages/home/service/home.service';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../pages/home/service/cart.service';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
-declare function selectHeader([]): any;
-declare let $: any;
 
 @Component({
   selector: 'app-header',
@@ -25,25 +22,26 @@ export class HeaderComponent {
     public homeService: HomeService,
     public cartService: CartService,
     private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
     afterNextRender(() => {
       this.homeService.menus().subscribe((res: any) => {
         console.log(res);
-        this.categories_menu = res.categories_menu;
-        // setTimeout(() => {
-        //   selectHeader($);
-        // }, 50);
+        this.categories_menu = res.categories_menu;        
       });
 
-      this.user = this.cartService.authService.user;
-      if (this.user) {
-        this.cartService.listCart().subscribe((res: any) => {
-          // console.log(res);
-          res.carts.data.forEach((cart: any) => {
-            this.cartService.changeCart(cart)
+      this.cartService.authService.user.subscribe((user: any) => {
+        console.log(user);
+        this.user = user;
+        this.cdr.detectChanges(); // Forzar la detección de cambios
+        if (this.user) {
+          this.cartService.listCart().subscribe((res: any) => {
+            res.carts.data.forEach((cart: any) => {
+              this.cartService.changeCart(cart);
+            });
           });
-        });
-      }
+        }
+      });
     });
   }
 

@@ -7,7 +7,11 @@ import { URL_SERVICIOS } from '../../../../config/config';
   providedIn: 'root',
 })
 export class ProfileClientService {
-  constructor(public authService: AuthService, public http: HttpClient) {}
+
+  constructor(
+    public authService: AuthService, 
+    public http: HttpClient
+  ) {}
 
   getInfoProfileClient() {
     let headers = new HttpHeaders({
@@ -22,7 +26,7 @@ export class ProfileClientService {
       Authorization: 'Bearer ' + this.authService.token,
     });
     let URL = URL_SERVICIOS + '/ecommerce/profile_client';
-    return this.http.put(URL, data, { headers: headers });
+    return this.http.post(URL, data, { headers: headers });
   }
 
   showUsers() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProfileClientService } from '../service/profile-client.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,9 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './edit-profile-client.component.html',
   styleUrl: './edit-profile-client.component.css',
 })
-export class EditProfileClientComponent {
+export class EditProfileClientComponent implements OnInit {
+  @Output() profileUpdate = new EventEmitter<any>();
+
   name: string = '';
   last_name: string = '';
   email: string = '';
@@ -22,9 +24,10 @@ export class EditProfileClientComponent {
   gender: string = '';
   address_user: string = '';
   description: string = '';
-  img_preview: string =
-    'https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg';
+  img_preview: string = 'https://cdn-icons-png.flaticon.com/512/1077/1077114.png';
   file_image: any = null;
+
+  profile: any = {};
 
   constructor(
     public profileClient: ProfileClientService,
@@ -40,8 +43,22 @@ export class EditProfileClientComponent {
       this.fb = res.fb;
       this.gender = res.gender;
       this.address_user = res.address_user;
-      this.file_image = res.avatar;
+      this.img_preview = res.avatar;      
     });
+  }
+
+  ngOnInit() {
+    // Simulación de datos de perfil iniciales
+    this.profile = {
+      name: this.name,
+      last_name: this.last_name,
+      email: this.email,
+      phone: this.phone,
+      bio: this.bio,
+      fb: this.fb,
+      avatar: this.img_preview,
+    };
+    this.profileUpdate.emit(this.profile); // Emitir el perfil inicial
   }
 
   processFile($event: any) {
@@ -55,8 +72,9 @@ export class EditProfileClientComponent {
     this.file_image = $event.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(this.file_image);
-    reader.onloadend = () => (this.img_preview = reader.result as string);
-    //this.isLoadingView();
+    reader.onloadend = () => {
+      this.img_preview = reader.result as string;      
+    };
   }
 
   updateUser() {
@@ -72,21 +90,39 @@ export class EditProfileClientComponent {
       this.toaster.error('Validacion', 'El telefono es obligatorio');
       return;
     }
-    let data = {
-      name: this.name,
-      last_name: this.last_name,
-      email: this.email,
-      phone: this.phone,
-      bio: this.bio,
-      fb: this.fb,
-      gender: this.gender,
-      address_user: this.address_user,
-      avatar: this.file_image,
-    };
-    this.profileClient.updateProfile(data).subscribe((res: any) => {
+    if (!this.gender) {
+      this.toaster.error('Validacion', 'El genero es obligatorio');
+      return;
+    }
+
+    let formData = new FormData();
+    formData.append('name', this.name);
+    formData.append('last_name', this.last_name);
+    formData.append('email', this.email);
+    if (this.phone) {
+      formData.append('phone', this.phone);
+    }
+    if (this.bio) {
+      formData.append('bio', this.bio);
+    }
+    if (this.fb) {
+      formData.append('fb', this.fb);
+    }
+    if (this.gender) {
+      formData.append('gender', this.gender);
+    }
+    if (this.address_user) {
+      formData.append('address_user', this.address_user);
+    }
+    if (this.file_image) {
+      formData.append('file_image', this.file_image);
+    }
+
+    this.profileClient.updateProfile(formData).subscribe((res: any) => {
       console.log(res);
       if (res.message == 403) {
         this.toaster.error('Validación', res.message_text);
+        this.profileUpdate.emit(this.profile); // Emitir el evento de actualización de perfil
       } else {
         this.toaster.success('Éxito', 'Usuario actualizado correctamente');
       }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, afterNextRender } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { URL_SERVICIOS } from '../../../config/config';
 
 @Injectable({
@@ -9,8 +9,13 @@ import { URL_SERVICIOS } from '../../../config/config';
 })
 export class AuthService {
   token: string = '';
-  user: any;
+  private userSubject: BehaviorSubject<any>;
+  public user: Observable<any>;
+
   constructor(public http: HttpClient, public router: Router) {
+    this.userSubject = new BehaviorSubject<any>(null);
+    this.user = this.userSubject.asObservable();
+
     afterNextRender(() => {
       this.initAuth();
     });
@@ -19,9 +24,10 @@ export class AuthService {
   initAuth() {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token') || '';
-      this.user = localStorage.getItem('user')
+      const user = localStorage.getItem('user')
         ? JSON.parse(localStorage.getItem('user') ?? '')
         : {};
+      this.userSubject.next(user);
     }
   }
 
@@ -39,10 +45,12 @@ export class AuthService {
       })
     );
   }
+
   saveLocalStorage(resp: any) {
     if (resp?.access_token) {
       localStorage.setItem('token', resp.access_token);
       localStorage.setItem('user', JSON.stringify(resp?.user));
+      this.userSubject.next(resp?.user);
       return true;
     }
     return false;
@@ -62,10 +70,12 @@ export class AuthService {
     let URL = URL_SERVICIOS + '/auth/verified_email';
     return this.http.post(URL, data);
   }
+
   verifiedCode(data: any) {
     let URL = URL_SERVICIOS + '/auth/verified_code';
     return this.http.post(URL, data);
   }
+
   verifiedNewPass(data: any) {
     let URL = URL_SERVICIOS + '/auth/new_password';
     return this.http.post(URL, data);
@@ -75,7 +85,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.token = '';
-    this.user = null;
+    this.userSubject.next(null);
 
     setTimeout(() => {
       this.router.navigateByUrl('/login');
