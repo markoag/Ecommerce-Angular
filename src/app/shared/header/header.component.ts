@@ -26,12 +26,12 @@ export class HeaderComponent {
   ) {
     afterNextRender(() => {
       this.homeService.menus().subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.categories_menu = res.categories_menu;        
       });
 
       this.cartService.authService.user.subscribe((user: any) => {
-        console.log(user);
+        // console.log(user);
         this.user = user;
         this.cdr.detectChanges(); // Forzar la detección de cambios
         if (this.user) {

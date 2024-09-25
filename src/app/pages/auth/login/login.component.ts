@@ -1,18 +1,20 @@
-import { Component, afterNextRender } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../service/auth.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-declare function password_show_toggle(): any;
+declare function password_show_toggle([]): any;
+declare let $: any;
+
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
   email: string = '';
   password: string = '';
   code_user: string = '';
@@ -35,12 +37,6 @@ export class LoginComponent {
       this.code_user = res.code;
     });
 
-    afterNextRender(() => {
-      setTimeout(() => {
-        password_show_toggle();
-      }, 50);
-    });
-
     if (this.code_user) {
       let data = {
         code_user: this.code_user,
@@ -59,6 +55,12 @@ export class LoginComponent {
         }
       });
     }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      password_show_toggle($);
+    }, 50);
   }
 
   login() {

@@ -9,6 +9,7 @@ import { CartComponent } from './pages/auth-view/cart/cart.component';
 import { CheckoutComponent } from './pages/auth-view/checkout/checkout.component';
 import { ThankYouOrderComponent } from './pages/auth-view/thank-you-order/thank-you-order.component';
 import { ProfileClientComponent } from './pages/auth-view/profile-client/profile-client.component';
+import { FilterAdvanceProductComponent } from './pages/guest-view/filter-advance-product/filter-advance-product.component';
 
 export const routes: Routes = [
   {
@@ -50,5 +51,9 @@ export const routes: Routes = [
     canActivate: [authGuard],
     path: 'perfil-usuario',
     component: ProfileClientComponent,
+  },
+  {    
+    path: 'filtro-productos',
+    component: FilterAdvanceProductComponent,
   },
 ];
