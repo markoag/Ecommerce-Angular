@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../pages/home/service/cart.service';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
+import { ModalProductComponent } from '../../pages/guest-view/component/modal-product/modal-product.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, ModalProductComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -17,6 +19,7 @@ export class HeaderComponent {
   user: any;
   listCarts: any = [];
   totalCarts: number = 0;
+  search: string = '';
   
   constructor(
     public homeService: HomeService,
@@ -64,5 +67,9 @@ export class HeaderComponent {
     let miDiv: any = document.getElementById('icon-' + menu.id);
     miDiv.innerHTML = menu.icon;
     return '';
+  }
+
+  searchProduct() {
+    window.location.href = '/filtro-productos?search=' + this.search;
   }
 }

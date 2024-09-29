@@ -2,7 +2,7 @@ import { afterRender, Component } from '@angular/core';
 import { HomeService } from '../../home/service/home.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ModalProductComponent } from '../component/modal-product/modal-product.component';
 import { AuthService } from '../../auth/service/auth.service';
 import { CartService } from '../../home/service/cart.service';
@@ -32,13 +32,18 @@ export class FilterAdvanceProductComponent {
   colors_selected: any = [];
   product_selected: any = null;
   variation_selected: any = null;
+  min_price: number = 0;
+  max_price: number = 0;
+  options_aditionals: any = [];
+  search: string = '';
 
   constructor(
     public homeService: HomeService,
     private authService: AuthService,
     public cartService: CartService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    public activedRoute: ActivatedRoute
   ) {
     this.homeService.getConfigFilter().subscribe((res: any) => {
       // console.log(res);
@@ -48,7 +53,11 @@ export class FilterAdvanceProductComponent {
       this.Products_relateds = res.products_relateds.data;
     });
 
-    this.homeService.filterAdvanceProduct({}).subscribe((res: any) => {
+    this.activedRoute.queryParams.subscribe((params: any) => {
+      this.search = params.search;
+    });
+
+    this.homeService.filterAdvanceProduct({search: this.search}).subscribe((res: any) => {
       console.log(res);
       this.PRODUCTS = res.products.data;
     });
@@ -62,7 +71,45 @@ export class FilterAdvanceProductComponent {
     this.price_view =
       this.authService.token && this.authService.user
         ? 'price_desc'
-        : 'price_pvp';
+        : 'price_pvp';    
+
+    $('#slider-range').slider({
+      range: true,
+      min: 0,
+      max: 2000,
+      values: [200, 600],
+      slide: (event: any, ui: any) => {
+        $('#amount').val('$' + ui.values[0] + ' - $' + ui.values[1]);
+        this.min_price = ui.values[0];
+        this.max_price = ui.values[1];
+      },
+      stop: () => {
+        // console.log(this.min_price, this.max_price);
+        this.filterAdvanceProduct();
+      },
+    });
+    $('#amount').val(
+      '$' +
+        $('#slider-range').slider('values', 0) +
+        ' - $' +
+        $('#slider-range').slider('values', 1)
+    );
+  }
+
+  reset() {
+    window.location.href = '/filtro-productos';
+  }
+
+  addOptionAditional(option: string) {
+    let INDEX = this.options_aditionals.findIndex(
+      (item: any) => item == option
+    );
+    if (INDEX != -1) {
+      this.options_aditionals.splice(INDEX, 1);
+    } else {
+      this.options_aditionals.push(option);
+    }
+    this.filterAdvanceProduct();
   }
 
   addCategorie(categorie: any) {
@@ -78,9 +125,7 @@ export class FilterAdvanceProductComponent {
   }
 
   addBrand(Brand: any) {
-    let INDEX = this.brand_selected.findIndex(
-      (item: any) => item == Brand.id
-    );
+    let INDEX = this.brand_selected.findIndex((item: any) => item == Brand.id);
     if (INDEX != -1) {
       this.brand_selected.splice(INDEX, 1);
     } else {
@@ -90,9 +135,7 @@ export class FilterAdvanceProductComponent {
   }
 
   addColor(color: any) {
-    let INDEX = this.colors_selected.findIndex(
-      (item: any) => item == color.id
-    );
+    let INDEX = this.colors_selected.findIndex((item: any) => item == color.id);
     if (INDEX != -1) {
       this.colors_selected.splice(INDEX, 1);
     } else {
@@ -106,9 +149,14 @@ export class FilterAdvanceProductComponent {
       categories_selected: this.categories_selected,
       brand_selected: this.brand_selected,
       colors_selected: this.colors_selected,
+      min_price: this.min_price,
+      max_price: this.max_price,
+      price_view: this.price_view,
+      options_aditionals: this.options_aditionals,
+      search: this.search,
     };
     this.homeService.filterAdvanceProduct(data).subscribe((res: any) => {
-      //console.log(res);
+      console.log(res);
       this.PRODUCTS = res.products.data;
     });
   }
