@@ -37,4 +37,9 @@ export class HomeService {
     let URL = URL_SERVICIOS + "/ecommerce/filter-advance-product";
     return this.http.post(URL, data);
   }
+
+  campaingDiscountLink(data: any) {
+    let URL = URL_SERVICIOS + "/ecommerce/campaing-discount-link";
+    return this.http.post(URL, data);
+  }
 }
