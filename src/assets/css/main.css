@@ -19901,6 +19901,9 @@ product all slider
   width: 205px;
 }
 .tp-compare-thumb img {
+  width: 205px;
+  height: 175.92px;
+  object-fit: contain;
   margin-bottom: 15px;
   max-width: 100%;
 }

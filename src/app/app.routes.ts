@@ -11,6 +11,7 @@ import { ThankYouOrderComponent } from './pages/auth-view/thank-you-order/thank-
 import { ProfileClientComponent } from './pages/auth-view/profile-client/profile-client.component';
 import { FilterAdvanceProductComponent } from './pages/guest-view/filter-advance-product/filter-advance-product.component';
 import { CampaingLinkComponent } from './pages/guest-view/campaing-link/campaing-link.component';
+import { CompareProductComponent } from './pages/guest-view/compare-product/compare-product.component';
 
 export const routes: Routes = [
   {
@@ -60,5 +61,9 @@ export const routes: Routes = [
   {    
     path: 'descuentos/:code',
     component: CampaingLinkComponent,
+  },
+  {    
+    path: 'comparar-productos',
+    component: CompareProductComponent,
   },
 ];

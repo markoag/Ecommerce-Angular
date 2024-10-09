@@ -58,7 +58,7 @@ export class FilterAdvanceProductComponent {
     });
 
     this.homeService.filterAdvanceProduct({search: this.search}).subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.PRODUCTS = res.products.data;
     });
 
@@ -193,6 +193,29 @@ export class FilterAdvanceProductComponent {
       return product.price_desc;
     } else {
       return product.price_pvp;
+    }
+  }
+
+  addCompareProduct(PRODUCT: any) {
+    // console.log(PRODUCT);
+    let COMPARES = localStorage.getItem("compares") ? JSON.parse(localStorage.getItem("compares") ?? '') : [];
+
+    let INDEX = COMPARES.findIndex((item: any) => item.id == PRODUCT.id);
+    if (INDEX != -1) {
+      this.toastr.error('Validación', 'El producto ya se encuentra en la lista a comparar');
+      return;
+    }
+   
+    if (COMPARES.length >= 4) {
+      this.toastr.error('Validación', 'Solo puedes comparar hasta 4 productos');
+      return;
+    }
+    COMPARES.push(PRODUCT);
+    this.toastr.success('Éxito', 'Producto agregado a comparar');
+
+    localStorage.setItem("compares", JSON.stringify(COMPARES));
+    if (COMPARES.length > 1) {
+      this.router.navigateByUrl('/comparar-productos');
     }
   }
 
